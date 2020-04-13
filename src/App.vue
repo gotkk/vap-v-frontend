@@ -1,5 +1,5 @@
 <template>
-  <v-app>
+  <v-app class="bg-app">
     <v-content>
       <router-view />
     </v-content>
@@ -22,7 +22,15 @@ export default {
 .t1 {
   background-color: cadetblue;
 }
-.t2{
+.t2 {
   background-color: coral;
+}
+.block-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.bg-app{
+  background-color: mintcream !important;
 }
 </style>

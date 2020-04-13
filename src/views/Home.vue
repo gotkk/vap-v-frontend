@@ -1,22 +1,11 @@
 <template>
   <div class="home">
-    <div class="block-center">
-      <v-container>
-        <v-row>
-          <v-col cols="12">
-            <div class="block-center block-column">
-              <span class="text-head" v-animate-css="'fadeInDown'">Calculate Country Area</span>
-              <span class="text-head" v-animate-css="'fadeInUp'">by Country Name</span>
-            </div>
-          </v-col>
-        </v-row>
-      </v-container>
-    </div>
+    <HeaderTitle />
 
     <div class="block-content">
       <v-form @submit.prevent="validate" id="input-country">
         <v-container>
-          <div class="block" v-animate-css="'flipInX'">
+          <div class="block" v-animate-css="animateinput">
             <v-row>
               <v-col cols="12" md="7" offset-md="1">
                 <v-text-field
@@ -25,14 +14,20 @@
                   ref="countrynameinput"
                   label="Country Name"
                   clearable
-                  autocomplete="false"
+                  autocomplete="off"
                   required
                   @click:clear="handleClear()"
                 ></v-text-field>
               </v-col>
               <v-col cols="12" md="3">
                 <div class="block-center block-btn">
-                  <v-btn type="submit" form="input-country" color="grey lighten-1" block>Search</v-btn>
+                  <v-btn
+                    type="submit"
+                    form="input-country"
+                    color="grey lighten-1"
+                    block
+                    >Search</v-btn
+                  >
                 </div>
               </v-col>
             </v-row>
@@ -46,13 +41,14 @@
         <div class="block" v-animate-css="'bounce'" ref="blocknanimation">
           <v-row>
             <v-col cols="12" md="10" offset-md="1">
-              <span>Country is</span>
-              <v-text-field v-model="resultcountryname" disabled></v-text-field>
+              <div class="block-center">
+                <span class="title">{{ resultcountryname }}</span>
+              </div>
             </v-col>
           </v-row>
           <v-row>
             <v-col cols="12" md="10" offset-md="1">
-              <span>Area is</span>
+              <span>The area is</span>
               <v-text-field v-model="area" disabled></v-text-field>
             </v-col>
           </v-row>
@@ -76,21 +72,28 @@
 <script>
 // @ is an alias to /src
 import { mapState } from "vuex";
+import HeaderTitle from "../components/home/HeaderTitle";
 
 export default {
   name: "Home",
-  components: {},
+  components: {
+    HeaderTitle
+  },
   data: () => ({
     result: false,
     notfound: false,
     countryname: "",
     resultcountryname: "",
     area: "",
-    countryRules: [v => !!v || "Country name is required"]
+    countryRules: [v => !!v || "Country name is required"],
+    animateinput: {
+      classes: "flipInX",
+      delay: 800
+    }
   }),
   updated() {
-    if(this.countryname === ""){
-      if(this.result||this.notfound){
+    if (this.countryname === "") {
+      if (this.result || this.notfound) {
         this.handleClear();
       }
     }
@@ -107,9 +110,15 @@ export default {
       }
     },
     handleSubmitCalculate() {
+      let loader = this.$loading.show({
+        color: "#ffffff",
+        loader: "bars",
+        backgroundColor: "#000000"
+      });
       this.$store
         .dispatch("getAreaFromName", this.countryname)
         .then(country => {
+          loader.hide();
           if (country.length > 0) {
             this.resultcountryname = country[0].Name;
             this.area = country[0].Area;
@@ -121,12 +130,20 @@ export default {
             this.result = false;
             this.notfound = true;
           }
-          if(this.$refs.blocknanimation){
+          if (this.$refs.blocknanimation) {
             this.$refs.blocknanimation.classList.add("animated", "bounce");
             setTimeout(() => {
               this.$refs.blocknanimation.classList.remove("animated", "bounce");
             }, [1000]);
           }
+        })
+        .catch(() => {
+          loader.hide();
+          this.$fire({
+            title: "Error",
+            text: "Database Connection Failed!!",
+            type: "error"
+          });
         });
     },
     setResult() {
@@ -136,7 +153,7 @@ export default {
         this.resultcountryname = "";
       }
     },
-    handleClear(){
+    handleClear() {
       this.result = false;
       this.notfound = false;
     }
@@ -145,25 +162,14 @@ export default {
 </script>
 
 <style scoped>
-.home .block-center {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-.home .text-head {
-  font-size: 24px;
-  font-weight: bold;
-}
 .home .block {
   padding: 16px;
   box-shadow: inset 0 -3em 3em rgba(0, 0, 0, 0.1), 0 0 0 2px rgb(255, 255, 255),
     0.3em 0.3em 1em rgba(0, 0, 0, 0.3);
 }
+
 .home .block-btn {
   height: 100%;
-}
-.home .block-column {
-  flex-direction: column;
 }
 
 .home .block-content {
