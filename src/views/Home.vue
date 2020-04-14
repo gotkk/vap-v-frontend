@@ -16,6 +16,7 @@
                   clearable
                   autocomplete="off"
                   required
+                  :loading="isLoading"
                   @click:clear="handleClear()"
                 ></v-text-field>
               </v-col>
@@ -84,6 +85,7 @@ export default {
     notfound: false,
     countryname: "",
     resultcountryname: "",
+    isLoading: false,
     area: "",
     countryRules: [v => !!v || "Country name is required"],
     animateinput: {
@@ -110,15 +112,15 @@ export default {
       }
     },
     handleSubmitCalculate() {
-      let loader = this.$loading.show({
-        color: "#ffffff",
-        loader: "bars",
-        backgroundColor: "#000000"
-      });
+      // let loader = this.$loading.show({
+      //   color: "#ffffff",
+      //   loader: "bars",
+      //   backgroundColor: "#000000"
+      // });
+      this.isLoading = true;
       this.$store
         .dispatch("getAreaFromName", this.countryname)
         .then(country => {
-          loader.hide();
           if (country.length > 0) {
             this.resultcountryname = country[0].Name;
             this.area = country[0].Area;
@@ -138,12 +140,15 @@ export default {
           }
         })
         .catch(() => {
-          loader.hide();
           this.$fire({
             title: "Error",
             text: "Database Connection Failed!!",
             type: "error"
           });
+        })
+        .finally(() => {
+          // loader.hide();
+          this.isLoading = false
         });
     },
     setResult() {
