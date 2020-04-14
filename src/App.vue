@@ -19,12 +19,6 @@ export default {
 </script>
 
 <style>
-.t1 {
-  background-color: cadetblue;
-}
-.t2 {
-  background-color: coral;
-}
 .block-center {
   display: flex;
   justify-content: center;
