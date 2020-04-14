@@ -17,7 +17,7 @@ const mutations = {
 const actions = {
     getAreaFromName({ commit }, country) {
         return new Promise((resolve, reject) => {
-            axios.get(`${process.env.VUE_APP_RWT_BACKEND_APP || 'http://localhost:5000/'}world/${country}`)
+            axios.get(`${process.env.VUE_APP_SPDB_BACKEND_APP || 'http://localhost:5000/'}world/${country}`)
                 .then((res) => {
                     commit("setCountry", res.data);
                     resolve(res.data)
