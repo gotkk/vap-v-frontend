@@ -105,7 +105,7 @@ export default {
   },
   methods: {
     validate() {
-      if (this.countryname === "") {
+      if (this.countryname === "" || !this.countryname) {
         this.$refs.countrynameinput.focus();
       } else {
         this.handleSubmitCalculate();
@@ -151,14 +151,10 @@ export default {
           this.isLoading = false
         });
     },
-    setResult() {
-      if (this.$store.getters.country.length > 0) {
-        this.resultcountryname = this.$store.getters.country[0].Name;
-      } else {
-        this.resultcountryname = "";
-      }
-    },
     handleClear() {
+      this.countryname = "";
+      this.resultcountryname = "";
+      this.area = "";
       this.result = false;
       this.notfound = false;
     }

@@ -9,7 +9,7 @@ Create environment variables (.env) file in directory of the project and edit (.
 ```
 VUE_APP_SPDB_BACKEND_APP=URL
 ```
-* URL is the domain of running backend application such as [http://localhost:5000/]. 
+* URL is the domain of running backend application such as [http://localhost:5000/]
 
 ### Installing
 Project setup
