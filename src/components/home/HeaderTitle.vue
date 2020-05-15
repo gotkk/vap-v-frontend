@@ -5,8 +5,8 @@
         <v-row>
           <v-col cols="12">
             <div class="block-center block-column">
-              <span class="text-head" v-animate-css="'fadeInDown'">Calculate Country Area</span>
-              <span class="text-head" v-animate-css="'fadeInUp'">by Country Name</span>
+              <span class="text-head" v-animate-css="'fadeInDown'">{{line1}}</span>
+              <span class="text-head" v-animate-css="'fadeInUp'">{{line2}}</span>
             </div>
           </v-col>
           </v-row>
@@ -17,7 +17,11 @@
 
 <script>
 export default {
-    name: 'HeaderTitle'
+    name: 'HeaderTitle',
+    props: [
+      "line1",
+      "line2"
+    ]
 };
 </script>
 
@@ -26,7 +30,7 @@ export default {
     flex-direction: column;
 }
 .headertitle .text-head {
-  font-size: 24px;
+  font-size: 22px;
   font-weight: bold;
 }
 </style>

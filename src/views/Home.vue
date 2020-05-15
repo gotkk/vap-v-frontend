@@ -1,11 +1,11 @@
 <template>
   <div class="home">
-    <HeaderTitle />
+    <HeaderTitle line1="Calculate Country Area" line2="by Country Name" />
 
-    <div class="block-content">
+    <div>
       <v-form @submit.prevent="validate" id="input-country">
         <v-container>
-          <div class="block" v-animate-css="animateinput">
+          <div class="block-transparent-shadow" v-animate-css="animateinput">
             <v-row>
               <v-col cols="12" md="7" offset-md="1">
                 <v-text-field
@@ -37,9 +37,9 @@
       </v-form>
     </div>
 
-    <div class="block-content">
+    <div>
       <v-container v-if="result">
-        <div class="block" v-animate-css="'bounce'" ref="blocknanimation">
+        <div class="block-transparent-shadow" v-animate-css="'bounce'" ref="blocknanimation">
           <v-row>
             <v-col cols="12" md="10" offset-md="1">
               <div class="block-center">
@@ -56,7 +56,7 @@
         </div>
       </v-container>
       <v-container v-if="notfound">
-        <div class="block" v-animate-css="'bounce'" ref="blocknanimation">
+        <div class="block-transparent-shadow" v-animate-css="'bounce'" ref="blocknanimation">
           <v-row>
             <v-col cols="12">
               <div class="block-center">
@@ -78,7 +78,7 @@ import HeaderTitle from "../components/home/HeaderTitle";
 export default {
   name: "Home",
   components: {
-    HeaderTitle
+    HeaderTitle,
   },
   data: () => ({
     result: false,
@@ -87,11 +87,11 @@ export default {
     resultcountryname: "",
     isLoading: false,
     area: "",
-    countryRules: [v => !!v || "Country name is required"],
+    countryRules: [(v) => !!v || "Country name is required"],
     animateinput: {
       classes: "flipInX",
-      delay: 800
-    }
+      delay: 800,
+    },
   }),
   updated() {
     if (this.countryname === "") {
@@ -101,7 +101,7 @@ export default {
     }
   },
   computed: {
-    ...mapState(["country"])
+    ...mapState(["country"]),
   },
   methods: {
     validate() {
@@ -120,7 +120,7 @@ export default {
       this.isLoading = true;
       this.$store
         .dispatch("getAreaFromName", this.countryname)
-        .then(country => {
+        .then((country) => {
           if (country.length > 0) {
             this.resultcountryname = country[0].Name;
             this.area = country[0].Area;
@@ -143,12 +143,12 @@ export default {
           this.$fire({
             title: "Error",
             text: "Database Connection Failed!!",
-            type: "error"
+            type: "error",
           });
         })
         .finally(() => {
           // loader.hide();
-          this.isLoading = false
+          this.isLoading = false;
         });
     },
     handleClear() {
@@ -157,23 +157,13 @@ export default {
       this.area = "";
       this.result = false;
       this.notfound = false;
-    }
-  }
+    },
+  },
 };
 </script>
 
 <style scoped>
-.home .block {
-  padding: 16px;
-  box-shadow: inset 0 -3em 3em rgba(0, 0, 0, 0.1), 0 0 0 2px rgb(255, 255, 255),
-    0.3em 0.3em 1em rgba(0, 0, 0, 0.3);
-}
-
 .home .block-btn {
   height: 100%;
-}
-
-.home .block-content {
-  margin-bottom: 20px;
 }
 </style>
