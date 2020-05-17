@@ -51,6 +51,14 @@
         </v-container>
       </v-form>
     </div>
+    <div>
+      <v-container>
+        <p v-animate-css="animateTextInfo">
+          <span class="font-weight-bold">Note :</span> Please make sure that the excel file contains columns that match
+          the database AirPollutionPM25 table.
+        </p>
+      </v-container>
+    </div>
   </div>
 </template>
 
@@ -65,28 +73,20 @@ export default {
   data() {
     return {
       animateinput: {
-        classes: "flipInX",
-        delay: 800,
+        classes: "fadeInUp",
+        delay: 400,
+      },
+      animateTextInfo: {
+        classes: "fadeInUp",
+        delay: 1200,
       },
       excelfile: "",
       choosed: false,
     };
   },
-  mounted() {
-    let loader = this.$loading.show({
-      color: "#ffffff",
-      loader: "bars",
-      canCancel: true,
-      backgroundColor: "#000000",
-    });
-    this.setTimeout(()=>{
-       loader.hide();
-    }, [3000])
-  },
   methods: {
     handleSelectFile() {
-      // this.excelfile = this.$refs.excel_file.files[0];
-      // console.log(this.$refs.excel_file.files[0]);
+      this.excelfile = this.$refs.excel_file.files[0];
       // console.log("selected");
       this.$refs.ddd.innerHTML = this.$refs.excel_file.files[0].name;
       this.choosed = true;
@@ -101,11 +101,73 @@ export default {
       this.$refs.excel_file.click();
     },
     validate() {
-      this.handleInsert();
+      let type = this.excelfile.type;
+      if (
+        type === "application/vnd.ms-excel" ||
+        type ===
+          "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+      ) {
+        this.handleUpload();
+      } else {
+        this.$fire({
+          title: "Invalid File Type",
+          text: "Please upload only excel file (*.xlsx, *.xls)",
+          type: "error",
+        });
+      }
     },
-    handleInsert() {
-      // const fromdata = new FromData();
-      // fromdata.append('file', this.excelfile)
+    handleUpload() {
+      let loader = this.$loading.show({
+        color: "#ffffff",
+        loader: "bars",
+        backgroundColor: "#000000",
+        // canCancel: true,
+      });
+      this.$store
+        .dispatch("uploadExceltoInsert", this.excelfile)
+        .then((result) => {
+          loader.hide();
+          this.$fire({
+            title: "Insert Success",
+            text: `${result.message} and then will be update Geom column to point using latitude and longitude data`,
+            type: "success",
+          }).then(() => {
+            loader = this.$loading.show({
+              color: "#ffffff",
+              loader: "bars",
+              backgroundColor: "#000000",
+            });
+            this.$store
+              .dispatch("updateColumGeom")
+              .then((result) => {
+                this.$fire({
+                  title: "Update Success",
+                  text: result.message,
+                  type: "success",
+                });
+              })
+              .catch((err) => {
+                this.$fire({
+                  title: "Error",
+                  text: err.response.data.message,
+                  type: "error",
+                });
+              })
+              .finally(() => {
+                loader.hide();
+              });
+          });
+        })
+        .catch((err) => {
+          this.$fire({
+            title: "Error",
+            text: err.response.data.message,
+            type: "error",
+          });
+        })
+        .finally(() => {
+          loader.hide();
+        });
     },
   },
 };

@@ -1,7 +1,8 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
-import InsertAirPollution from '../views/InsertAirPollution.vue';
+import CountryArea from '../views/CountryArea.vue';
+import InsertAirPollution from '../views/InsertAirPollution.vue'
 
 Vue.use(VueRouter)
 
@@ -10,6 +11,11 @@ Vue.use(VueRouter)
     path: '/',
     name: 'Home',
     component: Home
+  },
+  {
+    path: '/country_area',
+    name: 'CountryArea',
+    component: CountryArea
   },
   {
     path: '/insert_airpollution',

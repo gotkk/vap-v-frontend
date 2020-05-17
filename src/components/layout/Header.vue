@@ -10,7 +10,9 @@
           @click="setActiveTitle(item.title)"
         >
           <v-list-item-action>
-            <v-icon>{{ item.icon }}</v-icon>
+            <v-icon>
+              {{ item.icon }}
+            </v-icon>
           </v-list-item-action>
           <v-list-item-content>
             <v-list-item-title>{{ item.title }}</v-list-item-title>
@@ -21,7 +23,7 @@
 
     <div>
       <div class="block-center btn-nav-menu" @click.stop="drawer = !drawer">
-        <v-icon size="32">mdi-menu</v-icon>
+        <v-icon size="34">mdi-menu</v-icon>
       </div>
     </div>
   </div>
@@ -37,35 +39,20 @@ export default {
     drawer: false,
     activeTitle: "Application",
     menu: [
-      //   {
-      //     path: "/",
-      //     icon: "mdi-home-circle",
-      //     title: "Home",
-      //   },
       {
         path: "/",
-        icon: "mdi-google-maps",
+        icon: "mdi-home-circle",
+        title: "Home",
+      },
+      {
+        path: "/country_area",
+        icon: "mdi-map",
         title: "Country Area (Project2)",
       },
       {
         path: "/insert_airpollution",
         icon: "mdi-arrow-collapse-down",
         title: "Insert AirPollutionPM25",
-      },
-      {
-        path: "/contract",
-        icon: "mdi-clipboard-text",
-        title: "สัญญาเช่า",
-      },
-      {
-        path: "/electricity",
-        icon: "mdi-flash",
-        title: "ไฟฟ้า",
-      },
-      {
-        path: "/water",
-        icon: "mdi-water-pump",
-        title: "น้ำประปา",
       },
       {
         path: "/bill",
