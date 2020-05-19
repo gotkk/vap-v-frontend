@@ -5,6 +5,9 @@ import CountryArea from '../views/CountryArea.vue';
 import InsertAirPollution from '../views/InsertAirPollution.vue'
 import HistoryPM25byCountry from '../views/HistoryPM25byCountry.vue'
 import TotalPopulation from '../views/TotalPopulation.vue';
+import AllPointAllCountry from '../views/AllPointAllCountry.vue';
+
+
 import Test from '../views/test.vue';
 
 Vue.use(VueRouter)
@@ -39,6 +42,11 @@ Vue.use(VueRouter)
     path: '/test',
     name: 'Test',
     component: Test
+  },
+  {
+    path: '/all_point_all_country',
+    name: 'AllPointAllCountry',
+    component: AllPointAllCountry
   }
 ]
 

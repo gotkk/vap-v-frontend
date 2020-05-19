@@ -64,6 +64,11 @@ export default {
         icon: "mdi-file-document",
         title: "Total of Population",
       },
+      {
+        path: "/all_point_all_country",
+        icon: "mdi-file-document",
+        title: "All City Point of All Country",
+      },
     ],
   }),
   mounted() {
