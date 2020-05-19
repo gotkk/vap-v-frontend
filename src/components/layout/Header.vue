@@ -55,7 +55,7 @@ export default {
         title: "Insert AirPollutionPM25",
       },
       {
-        path: "/bill",
+        path: "/history_pm25_country",
         icon: "mdi-file-document",
         title: "ใบเสร็จ",
       },

@@ -36,7 +36,7 @@ const actions = {
           }
         )
         .then((res) => {
-          commit("airPollutuionStatus", res.data);
+          commit("setAirPollutuionStatus", res.data);
           resolve(res.data);
         })
         .catch((err) => {
@@ -48,7 +48,7 @@ const actions = {
     return new Promise((resolve, reject) => {
         axios.get( `${process.env.VUE_APP_SPDB_BACKEND_APP || "http://localhost:5000/"}airpollution/update_geometry`)
         .then((res) => {
-            commit("airPollutuionStatus", res.data);
+            commit("setAirPollutuionStatus", res.data);
             resolve(res.data);
         })
         .catch((err) => {

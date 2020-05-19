@@ -8,6 +8,7 @@ import VAnimateCss from 'v-animate-css';
 import VueSimpleAlert from "vue-simple-alert";
 import Loading from 'vue-loading-overlay';
 import 'vue-loading-overlay/dist/vue-loading.css';
+import 'material-design-icons-iconfont/dist/material-design-icons.css'
  
 
 Vue.use(VAnimateCss);

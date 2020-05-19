@@ -2,7 +2,7 @@
   <div class="insert-air-pollution">
     <HeaderTitle
       line1="Insert the Air Pollution Data"
-      line2="by Excel File (.xlsx)"
+      line2="by Excel File"
     />
     <div>
       <v-form
