@@ -4,6 +4,8 @@ import Home from '../views/Home.vue'
 import CountryArea from '../views/CountryArea.vue';
 import InsertAirPollution from '../views/InsertAirPollution.vue'
 import HistoryPM25byCountry from '../views/HistoryPM25byCountry.vue'
+import TotalPopulation from '../views/TotalPopulation.vue';
+import Test from '../views/test.vue';
 
 Vue.use(VueRouter)
 
@@ -27,6 +29,16 @@ Vue.use(VueRouter)
     path: '/history_pm25_country',
     name: 'HistoryPM25byCountry',
     component: HistoryPM25byCountry
+  },
+  {
+    path: '/total_population',
+    name: 'TotalPopulation',
+    component: TotalPopulation
+  },
+  {
+    path: '/test',
+    name: 'Test',
+    component: Test
   }
 ]
 

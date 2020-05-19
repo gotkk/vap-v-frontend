@@ -57,7 +57,12 @@ export default {
       {
         path: "/history_pm25_country",
         icon: "mdi-file-document",
-        title: "ใบเสร็จ",
+        title: "Historical PM25 by Country",
+      },
+      {
+        path: "/total_population",
+        icon: "mdi-file-document",
+        title: "Total of Population",
       },
     ],
   }),

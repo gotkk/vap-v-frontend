@@ -43,12 +43,15 @@
           <v-row>
             <v-col cols="12">
               <v-card class="block-transparent-shadow">
+                <div class="block-center">
+                  <span class="font-weight-bold">Historical PM 2.5</span>
+                </div>
                 <!-- v-model="historypm25" -->
                 <v-card-title>
                   <v-text-field
                     v-model="search"
                     append-icon="search"
-                    label="Search"
+                    label="Search result"
                     single-line
                     hide-details
                     
@@ -114,7 +117,7 @@ export default {
       delay: 800,
     },
     tableheaders: [
-      { text: "Country", value: "country" },
+      { text: "Country", value: "country", class: "font-weight-bold" },
       { text: "City", value: "city" },
       { text: "Year", value: "Year" },
       { text: "PM25", value: "pm25" },
@@ -131,7 +134,7 @@ export default {
     },
   },
   computed: {
-    ...mapState(["country"]),
+    ...mapState(["historypm25"]),
   },
   methods: {
     validate() {
@@ -145,9 +148,9 @@ export default {
       this.isLoading = true;
       this.$store
         .dispatch("getHistorypm25byCountry", this.countryname)
-        .then((country) => {
-          let { result } = country;
-          if (country.result && country.result[0].length > 0) {
+        .then((history) => {
+          let { result } = history;
+          if (history.result && history.result[0].length > 0) {
             this.historyitems = [...result[0]];
             this.result = true;
             this.notfound = false;
