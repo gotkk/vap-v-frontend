@@ -4,12 +4,15 @@ const state = {
   airpollutuion: "",
   airpollutuionstatus: "",
   closestbangkok: "",
+  neighborbangkok: "",
+  pointMBR: "",
 };
 
 const getters = {
     airPollutuionStatus: (state) => state.airpollutuionstatus,
     airpollutuion: (state) => state.airpollutuion,
-    closestBangkok: (state) => state.closestBangkok,
+    closestBangkok: (state) => state.closestbangkok,
+    neighborBangkok: (state) => state.neighborbangkok,
 };
 
 const mutations = {
@@ -21,6 +24,12 @@ const mutations = {
   },
   setClosestBangkok(state, closestbangkok){
     state.closestbangkok = closestbangkok;
+  },
+  setNeighborBangkok(state, neighborbangkok){
+    state.neighborbangkok = neighborbangkok;
+  },
+  setPointMBR(state, pointMBR){
+    state.pointMBR = pointMBR
   }
 };
 
@@ -73,6 +82,35 @@ const actions = {
       })
     });
   },
+  getNeighborBangkok({commit}){
+    return new Promise((resolve, reject) => {
+      axios.get( `${process.env.VUE_APP_SPDB_BACKEND_APP || "http://localhost:5000/"}airpollution/neighbor_bangkok`)
+      .then((res) => {
+          commit("setNeighborBangkok", res.data);
+          resolve(res.data);
+      })
+      .catch((err) => {
+          reject(err);
+      })
+    });
+  },
+  getMinMaxLatLnThaiForMBR({ commit }) {
+    return new Promise((resolve, reject) => {
+      axios
+        .get(
+          `${process.env.VUE_APP_SPDB_BACKEND_APP ||
+            "http://localhost:5000/"}airpollution/maxmin_latln_mbr`
+        )
+        .then((res) => {
+          commit("setPointMBR", res.data);
+          resolve(res.data);
+        })
+        .catch((err) => {
+          console.log(err);
+          reject(err);
+        });
+    });
+  }
 };
 
 export default {

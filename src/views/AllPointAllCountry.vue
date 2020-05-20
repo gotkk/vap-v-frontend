@@ -49,7 +49,7 @@
           ref="blocknanimation"
           v-if="visualizeResult.length > 0"
         >
-          <MapVisualize :pointlocation="visualizeResult"/>
+          <MapVisualize :pointlocation="visualizeResult" />
         </div>
       </v-container>
       <v-container v-if="notfound">
@@ -97,6 +97,13 @@ export default {
         delay: 800,
       },
     };
+  },
+  watch: {
+    year(newValue) {
+      if (newValue === "") {
+        this.handleClear();
+      }
+    },
   },
   methods: {
     validate() {
@@ -152,7 +159,7 @@ export default {
   height: 100%;
 }
 
-.allPointAllCountry .block-map{
+.allPointAllCountry .block-map {
   height: 90vh;
   width: 100%;
 }

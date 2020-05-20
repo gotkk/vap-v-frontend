@@ -7,6 +7,9 @@ import HistoryPM25byCountry from '../views/HistoryPM25byCountry.vue'
 import TotalPopulation from '../views/TotalPopulation.vue';
 import AllPointAllCountry from '../views/AllPointAllCountry.vue';
 import ClosestBangkok from '../views/ClosestBangkok.vue';
+import NeighborThailand from '../views/NeighborThailand.vue';
+import VisualTestTest from '../views/VisualTestTest.vue';
+import MBRThailand from '../views/MBRThailand.vue';
 
 
 import Test from '../views/test.vue';
@@ -45,6 +48,11 @@ Vue.use(VueRouter)
     component: Test
   },
   {
+    path: '/test2',
+    name: 'VisualTestTest',
+    component: VisualTestTest
+  },
+  {
     path: '/all_point_all_country',
     name: 'AllPointAllCountry',
     component: AllPointAllCountry
@@ -53,6 +61,16 @@ Vue.use(VueRouter)
     path: '/closest_bangkok',
     name: 'ClosestBangkok',
     component: ClosestBangkok
+  },
+  {
+    path: '/neighbor_thailand',
+    name: 'NeighborThailand',
+    component: NeighborThailand
+  },
+  {
+    path: '/mbr_thailand',
+    name: 'MBRThailand',
+    component: MBRThailand
   },
 ]
 

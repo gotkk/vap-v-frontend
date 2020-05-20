@@ -74,6 +74,16 @@ export default {
         icon: "mdi-file-document",
         title: "50 Closest Bangkok",
       },
+      {
+        path: "/neighbor_thailand",
+        icon: "mdi-file-document",
+        title: "Neighbor of Thailand",
+      },
+      {
+        path: "/mbr_thailand",
+        icon: "mdi-file-document",
+        title: "MBR of Thailand",
+      },
     ],
   }),
   mounted() {

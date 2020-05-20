@@ -1,6 +1,6 @@
 <template>
-  <div class="closestBangkok">
-    <HeaderTitle line1="Visualize 50 City Point" line2="Closest to Bangkok" />
+  <div class="MBRThailand">
+    <HeaderTitle line1="MBR Covering" line2="Thailand 2009" />
     <div>
       <v-container v-if="result">
         <div
@@ -28,38 +28,50 @@
         </div>
       </v-container>
     </div>
+    <div>
+      <v-container v-if="result">
+        <p v-animate-css="animateTextInfo">
+          <span class="font-weight-bold">Note :</span> No data for this in the
+          year 2009
+        </p>
+      </v-container>
+    </div>
   </div>
 </template>
 
 <script>
 import HeaderTitle from "../components/home/HeaderTitle";
 import MapVisualize from "../components/visualize/MapVisualize";
-
 export default {
-  name: "ClosestBangkok",
+  name: "MBRThailand",
   components: {
     HeaderTitle,
-    MapVisualize,
+    MapVisualize
   },
   data() {
     return {
       result: false,
       notfound: false,
       visualizeResult: [],
+      animateTextInfo: {
+        classes: "fadeInUp",
+        delay: 1200,
+      },
     };
   },
-  mounted() {
+   mounted() {
     let loader = this.$loading.show({
       color: "#ffffff",
       loader: "bars",
       backgroundColor: "#000000",
     });
     this.$store
-      .dispatch("get50ClosestBangkok")
-      .then((closest) => {
-        let { result } = closest;
-        if (result && result[0].length > 0) {
-          this.visualizeResult = [...result[0]];
+      .dispatch("getMinMaxLatLnThaiForMBR")
+      .then((mbr) => {
+        let { result } = mbr;
+        console.log(result);
+        if (result && result.length > 0) {
+          this.visualizeResult = [...result];
           this.result = true;
           this.notfound = false;
         } else {
@@ -73,7 +85,8 @@ export default {
           }, [1000]);
         }
       })
-      .catch(() => {
+      .catch((err) => {
+        console.log(err);
         this.$fire({
           title: "Error",
           text: "Database Connection Failed!!",
@@ -88,7 +101,7 @@ export default {
 </script>
 
 <style scoped>
-.closestBangkok .block-map {
+.MBRThailand .block-map {
   height: 90vh;
   width: 100%;
 }

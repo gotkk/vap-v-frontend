@@ -1,6 +1,6 @@
 <template>
-  <div class="closestBangkok">
-    <HeaderTitle line1="Visualize 50 City Point" line2="Closest to Bangkok" />
+  <div class="neighborThailand">
+    <HeaderTitle line1="Visualize Neighbor" line2="of Thailand 2018" />
     <div>
       <v-container v-if="result">
         <div
@@ -28,15 +28,21 @@
         </div>
       </v-container>
     </div>
+    <div>
+      <v-container  v-if="result">
+        <p v-animate-css="animateTextInfo">
+          <span class="font-weight-bold">Note :</span> No data for this in the year 2018
+        </p>
+      </v-container>
+    </div>
   </div>
 </template>
 
 <script>
 import HeaderTitle from "../components/home/HeaderTitle";
 import MapVisualize from "../components/visualize/MapVisualize";
-
 export default {
-  name: "ClosestBangkok",
+  name: "NeighborThailand",
   components: {
     HeaderTitle,
     MapVisualize,
@@ -46,6 +52,10 @@ export default {
       result: false,
       notfound: false,
       visualizeResult: [],
+      animateTextInfo: {
+        classes: "fadeInUp",
+        delay: 1200,
+      },
     };
   },
   mounted() {
@@ -55,7 +65,7 @@ export default {
       backgroundColor: "#000000",
     });
     this.$store
-      .dispatch("get50ClosestBangkok")
+      .dispatch("getNeighborBangkok")
       .then((closest) => {
         let { result } = closest;
         if (result && result[0].length > 0) {
@@ -88,7 +98,7 @@ export default {
 </script>
 
 <style scoped>
-.closestBangkok .block-map {
+.neighborThailand .block-map {
   height: 90vh;
   width: 100%;
 }
