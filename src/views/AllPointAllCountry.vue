@@ -86,7 +86,7 @@ export default {
       notfound: false,
       isLoading: false,
       year: "",
-      visualizeResult: {},
+      visualizeResult: [],
       yearRules: [
         (v) => !!v || "Year is required",
         (v) => /^\d+$/.test(v) || "Year is only positive integer",

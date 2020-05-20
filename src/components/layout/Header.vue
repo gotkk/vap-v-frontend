@@ -69,6 +69,11 @@ export default {
         icon: "mdi-file-document",
         title: "All City Point of All Country",
       },
+      {
+        path: "/closest_bangkok",
+        icon: "mdi-file-document",
+        title: "50 Closest Bangkok",
+      },
     ],
   }),
   mounted() {

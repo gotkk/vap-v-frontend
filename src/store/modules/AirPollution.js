@@ -2,12 +2,14 @@ const axios = require("axios");
 
 const state = {
   airpollutuion: "",
-  airpollutuionstatus: ""
+  airpollutuionstatus: "",
+  closestbangkok: "",
 };
 
 const getters = {
     airPollutuionStatus: (state) => state.airpollutuionstatus,
     airpollutuion: (state) => state.airpollutuion,
+    closestBangkok: (state) => state.closestBangkok,
 };
 
 const mutations = {
@@ -17,6 +19,9 @@ const mutations = {
   setAirPollutuionStatus(state, airpollutuion) {
     state.airpollutuion = airpollutuion;
   },
+  setClosestBangkok(state, closestbangkok){
+    state.closestbangkok = closestbangkok;
+  }
 };
 
 const actions = {
@@ -54,8 +59,20 @@ const actions = {
         .catch((err) => {
             reject(err);
         })
-    })
-  }
+    });
+  },
+  get50ClosestBangkok({commit}){
+    return new Promise((resolve, reject) => {
+      axios.get( `${process.env.VUE_APP_SPDB_BACKEND_APP || "http://localhost:5000/"}airpollution/50closest_bangkok`)
+      .then((res) => {
+          commit("setClosestBangkok", res.data);
+          resolve(res.data);
+      })
+      .catch((err) => {
+          reject(err);
+      })
+    });
+  },
 };
 
 export default {

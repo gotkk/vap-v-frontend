@@ -6,6 +6,7 @@ import InsertAirPollution from '../views/InsertAirPollution.vue'
 import HistoryPM25byCountry from '../views/HistoryPM25byCountry.vue'
 import TotalPopulation from '../views/TotalPopulation.vue';
 import AllPointAllCountry from '../views/AllPointAllCountry.vue';
+import ClosestBangkok from '../views/ClosestBangkok.vue';
 
 
 import Test from '../views/test.vue';
@@ -47,7 +48,12 @@ Vue.use(VueRouter)
     path: '/all_point_all_country',
     name: 'AllPointAllCountry',
     component: AllPointAllCountry
-  }
+  },
+  {
+    path: '/closest_bangkok',
+    name: 'ClosestBangkok',
+    component: ClosestBangkok
+  },
 ]
 
 const router = new VueRouter({
