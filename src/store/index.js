@@ -5,6 +5,7 @@ import airpollution from './modules/AirPollution';
 import histotypm25 from './modules/HistoryPM25';
 import TotalPopulation from './modules/TotalPopulation';
 import VisualAllPointAllCountry from './modules/VisualAllPointAllCountry';
+import Menu from './modules/Menu';
 
 Vue.use(Vuex)
 
@@ -20,6 +21,7 @@ export default new Vuex.Store({
     airpollution,
     histotypm25,
     TotalPopulation,
-    VisualAllPointAllCountry
+    VisualAllPointAllCountry,
+    Menu
   }
 })
