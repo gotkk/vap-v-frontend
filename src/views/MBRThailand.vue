@@ -1,15 +1,27 @@
 <template>
   <div class="MBRThailand">
-    <HeaderTitle line1="MBR Covering" line2="Thailand 2009" />
+    <HeaderTitle line1="MBR Covering Thailand" line2="in 2009" />
+    <div>
+      <v-container>
+        <p v-animate-css="animateTextInfo">
+          <span class="font-weight-bold">Note :</span> No data for Thailand in
+          2009
+        </p>
+      </v-container>
+    </div>
     <div>
       <v-container v-if="result">
         <div
           class="block-transparent-shadow block-map"
           v-animate-css="'bounce'"
           ref="blocknanimation"
-          v-if="visualizeResult.length > 0"
+          v-if="visualizePMPoint.length > 0"
         >
-          <MapVisualize :pointlocation="visualizeResult" />
+          <MapVisualize
+            :pointlocation1="visualizePMPoint"
+            :pointlocation2="visualizeMBRPoint"
+            :polygonlocation="visualizeRing"
+          />
         </div>
       </v-container>
       <v-container v-if="notfound">
@@ -28,38 +40,32 @@
         </div>
       </v-container>
     </div>
-    <div>
-      <v-container v-if="result">
-        <p v-animate-css="animateTextInfo">
-          <span class="font-weight-bold">Note :</span> No data for this in the
-          year 2009
-        </p>
-      </v-container>
-    </div>
   </div>
 </template>
 
 <script>
 import HeaderTitle from "../components/home/HeaderTitle";
-import MapVisualize from "../components/visualize/MapVisualize";
+import MapVisualize from "../components/visualize/MapVisualize2";
 export default {
   name: "MBRThailand",
   components: {
     HeaderTitle,
-    MapVisualize
+    MapVisualize,
   },
   data() {
     return {
       result: false,
       notfound: false,
-      visualizeResult: [],
+      visualizeMBRPoint: [],
+      visualizePMPoint: [],
+      visualizeRing: [],
       animateTextInfo: {
         classes: "fadeInUp",
         delay: 1200,
       },
     };
   },
-   mounted() {
+  mounted() {
     let loader = this.$loading.show({
       color: "#ffffff",
       loader: "bars",
@@ -69,9 +75,10 @@ export default {
       .dispatch("getMinMaxLatLnThaiForMBR")
       .then((mbr) => {
         let { result } = mbr;
-        console.log(result);
-        if (result && result.length > 0) {
-          this.visualizeResult = [...result];
+        if (result) {
+          this.visualizeMBRPoint = [...result.mbrpoint];
+          this.visualizePMPoint = [...result.pmpoint];
+          this.visualizeRing = [...result.ring];
           this.result = true;
           this.notfound = false;
         } else {
@@ -85,8 +92,7 @@ export default {
           }, [1000]);
         }
       })
-      .catch((err) => {
-        console.log(err);
+      .catch(() => {
         this.$fire({
           title: "Error",
           text: "Database Connection Failed!!",

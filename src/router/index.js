@@ -10,7 +10,8 @@ import ClosestBangkok from '../views/ClosestBangkok.vue';
 import NeighborThailand from '../views/NeighborThailand.vue';
 import VisualTestTest from '../views/VisualTestTest.vue';
 import MBRThailand from '../views/MBRThailand.vue';
-
+import HighestNo from '../views/HighestNo.vue';
+import LowIncome from '../views/LowIncome.vue';
 
 import Test from '../views/test.vue';
 
@@ -71,6 +72,16 @@ Vue.use(VueRouter)
     path: '/mbr_thailand',
     name: 'MBRThailand',
     component: MBRThailand
+  },
+  {
+    path: '/highest_city',
+    name: 'HighestNo',
+    component: HighestNo
+  },
+  {
+    path: '/low_income',
+    name: 'LowIncome',
+    component: LowIncome
   },
 ]
 

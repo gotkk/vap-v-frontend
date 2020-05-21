@@ -84,6 +84,16 @@ export default {
         icon: "mdi-file-document",
         title: "MBR of Thailand",
       },
+      {
+        path: "/highest_city",
+        icon: "mdi-file-document",
+        title: "Highest No of City",
+      },
+      {
+        path: "/low_income",
+        icon: "mdi-file-document",
+        title: "Low Income by Year",
+      },
     ],
   }),
   mounted() {

@@ -1,15 +1,7 @@
 <template>
-  <div class="neighborThailand">
-    <HeaderTitle line1="Visualize Neighbor" line2="of Thailand 2018" />
-    <div>
-      <v-container>
-        <p v-animate-css="animateTextInfo">
-          <span class="font-weight-bold">Note :</span> No data for this in the
-          year 2018
-        </p>
-      </v-container>
-    </div>
-    <div>
+  <div class="highestNo">
+    <HeaderTitle line1="All city points" line2="Having the Highest in 2011" />
+     <div>
       <v-container v-if="result">
         <div
           class="block-transparent-shadow block-map"
@@ -43,7 +35,7 @@
 import HeaderTitle from "../components/home/HeaderTitle";
 import MapVisualize from "../components/visualize/MapVisualize";
 export default {
-  name: "NeighborThailand",
+  name: "HighestNo",
   components: {
     HeaderTitle,
     MapVisualize,
@@ -66,9 +58,9 @@ export default {
       backgroundColor: "#000000",
     });
     this.$store
-      .dispatch("getNeighborBangkok")
-      .then((closest) => {
-        let { result } = closest;
+      .dispatch("getHighestPoint")
+      .then((highest) => {
+        let { result } = highest;
         if (result && result[0].length > 0) {
           this.visualizeResult = [...result[0]];
           this.result = true;
@@ -99,7 +91,7 @@ export default {
 </script>
 
 <style scoped>
-.neighborThailand .block-map {
+.highestNo .block-map {
   height: 90vh;
   width: 100%;
 }

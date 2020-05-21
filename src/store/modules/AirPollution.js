@@ -6,6 +6,8 @@ const state = {
   closestbangkok: "",
   neighborbangkok: "",
   pointMBR: "",
+  highestpoint: "",
+  lowincome: ""
 };
 
 const getters = {
@@ -30,7 +32,13 @@ const mutations = {
   },
   setPointMBR(state, pointMBR){
     state.pointMBR = pointMBR
-  }
+  },
+  setHighestPoint(state, highestpoint){
+    state.highestpoint = highestpoint
+  },
+  low_income(state, lowincome){
+    state.lowincome = lowincome
+  },
 };
 
 const actions = {
@@ -110,7 +118,41 @@ const actions = {
           reject(err);
         });
     });
-  }
+  },
+  getHighestPoint({ commit }) {
+    return new Promise((resolve, reject) => {
+      axios
+        .get(
+          `${process.env.VUE_APP_SPDB_BACKEND_APP ||
+            "http://localhost:5000/"}airpollution/highest_no_city`
+        )
+        .then((res) => {
+          commit("setHigjestPoint", res.data);
+          resolve(res.data);
+        })
+        .catch((err) => {
+          console.log(err);
+          reject(err);
+        });
+    });
+  },
+  getLowIncome({ commit }, year) {
+    return new Promise((resolve, reject) => {
+      axios
+        .get(
+          `${process.env.VUE_APP_SPDB_BACKEND_APP ||
+            "http://localhost:5000/"}airpollution/low_income/${year}`
+        )
+        .then((res) => {
+          commit("setLowIncome", res.data);
+          resolve(res.data);
+        })
+        .catch((err) => {
+          console.log(err);
+          reject(err);
+        });
+    });
+  },
 };
 
 export default {
