@@ -12,9 +12,9 @@
         ref="get_population"
       >
         <v-container>
-          <div class="block-transparent-shadow" v-animate-css="animateinput">
+          <div class="block-transparent-shadow" v-animate-css="animateInput">
             <v-row>
-              <v-col cols="12" md="6">
+              <v-col cols="12" sm="5" offset-sm="1">
                 <v-text-field
                   v-model="year"
                   :rules="yearRules"
@@ -28,7 +28,7 @@
                   @click:clear="handleClear()"
                 ></v-text-field>
               </v-col>
-              <v-col cols="12" md="6">
+              <v-col cols="12" sm="5">
                 <v-text-field
                   v-model="colorpm25"
                   :rules="colorpm25Rules"
@@ -65,7 +65,7 @@
       <v-container v-if="result">
         <div
           class="block-transparent-shadow"
-          v-animate-css="'bounce'"
+          v-animate-css="animateResult"
           ref="blocknanimation"
           v-if="
             Object.keys(totalpopulation).length > 0 &&
@@ -73,23 +73,7 @@
           "
         >
           <v-row>
-            <v-col cols="12" md="10" offset-md="1">
-              <div class="block-center">
-                <span class="title">Year is {{ totalpopulation.Year }}</span>
-              </div>
-            </v-col>
-          </v-row>
-          <v-row>
-            <v-col cols="12" md="10" offset-md="1">
-              <div class="block-center">
-                <span class="title"
-                  >Color_pm25 is {{ totalpopulation.color_pm25 }}</span
-                >
-              </div>
-            </v-col>
-          </v-row>
-          <v-row>
-            <v-col cols="12" md="10" offset-md="1">
+            <v-col cols="12" sm="10" offset-sm="1">
               <span>The total of population is</span>
               <v-text-field
                 v-model="totalpopulation.total_population"
@@ -102,7 +86,7 @@
       <v-container v-if="notfound">
         <div
           class="block-transparent-shadow"
-          v-animate-css="'bounce'"
+          v-animate-css="animateResult"
           ref="blocknanimation"
         >
           <v-row>
@@ -120,7 +104,6 @@
 
 <script>
 // @ is an alias to /src
-import { mapState } from "vuex";
 import HeaderTitle from "../components/home/HeaderTitle";
 
 export default {
@@ -141,25 +124,24 @@ export default {
       (v) => (v && v.length === 4) || "Year length must be 4",
     ],
     colorpm25Rules: [(v) => !!v || "Color of PM 2.5 is required"],
-    animateinput: {
-      classes: "flipInX",
-      delay: 800,
-    },
+    animateInput: {},
+    animateResult: {},
   }),
-  watch: {
-    year(newValue) {
-      if (newValue === "" && this.colorpm25 === "") {
-        this.handleClear();
-      }
-    },
-    colorpm25(newValue) {
-      if (newValue === "" && this.year === "") {
-        this.handleClear();
-      }
-    },
+  created() {
+    this.animateInput = this.$store.getters.a_input;
+    this.animateResult = this.$store.getters.a_result;
   },
-  computed: {
-    ...mapState(["p_totalpopulation"]),
+  watch: {
+    year() {
+      if (this.result || this.notfound) {
+        this.handleClear();
+      }
+    },
+    colorpm25() {
+      if (this.result || this.notfound) {
+        this.handleClear();
+      }
+    },
   },
   methods: {
     validate() {

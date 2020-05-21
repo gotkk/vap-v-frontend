@@ -8,9 +8,9 @@
     <div>
       <v-form @submit.prevent="validate" id="visual-input" ref="visual-input">
         <v-container>
-          <div class="block-transparent-shadow" v-animate-css="animateinput">
+          <div class="block-transparent-shadow" v-animate-css="animateInput">
             <v-row>
-              <v-col cols="12" md="7" offset-md="1">
+              <v-col cols="12" sm="7" offset-sm="1">
                 <v-text-field
                   v-model="year"
                   :rules="yearRules"
@@ -24,7 +24,7 @@
                   @click:clear="handleClear()"
                 ></v-text-field>
               </v-col>
-              <v-col cols="12" md="3">
+              <v-col cols="12" sm="3">
                 <div class="block-center block-btn">
                   <v-btn
                     type="submit"
@@ -45,7 +45,7 @@
       <v-container v-if="result">
         <div
           class="block-transparent-shadow block-map"
-          v-animate-css="'bounce'"
+          v-animate-css="animateResult"
           ref="blocknanimation"
           v-if="visualizeResult.length > 0"
         >
@@ -55,7 +55,7 @@
       <v-container v-if="notfound">
         <div
           class="block-transparent-shadow"
-          v-animate-css="'bounce'"
+          v-animate-css="animateResult"
           ref="blocknanimation"
         >
           <v-row>
@@ -92,15 +92,17 @@ export default {
         (v) => /^\d+$/.test(v) || "Year is only positive integer",
         (v) => (v && v.length === 4) || "Year length must be 4",
       ],
-      animateinput: {
-        classes: "flipInX",
-        delay: 800,
-      },
+      animateInput: {},
+      animateResult: {},
     };
   },
+  created() {
+    this.animateInput = this.$store.getters.a_input;
+    this.animateResult = this.$store.getters.a_result;
+  },
   watch: {
-    year(newValue) {
-      if (newValue === "") {
+    year() {
+      if (this.result || this.notfound) {
         this.handleClear();
       }
     },
@@ -146,7 +148,7 @@ export default {
         });
     },
     handleClear() {
-      this.visualizeResult = {};
+      this.visualizeResult = [];
       this.result = false;
       this.notfound = false;
     },

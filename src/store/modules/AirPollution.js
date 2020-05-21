@@ -36,7 +36,7 @@ const mutations = {
   setHighestPoint(state, highestpoint){
     state.highestpoint = highestpoint
   },
-  low_income(state, lowincome){
+  setLowIncome(state, lowincome){
     state.lowincome = lowincome
   },
 };
@@ -127,7 +127,7 @@ const actions = {
             "http://localhost:5000/"}airpollution/highest_no_city`
         )
         .then((res) => {
-          commit("setHigjestPoint", res.data);
+          commit("setHighestPoint", res.data);
           resolve(res.data);
         })
         .catch((err) => {

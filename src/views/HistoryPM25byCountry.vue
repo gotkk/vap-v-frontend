@@ -5,9 +5,9 @@
     <div>
       <v-form @submit.prevent="validate" id="input-country">
         <v-container>
-          <div class="block-transparent-shadow" v-animate-css="animateinput">
+          <div class="block-transparent-shadow" v-animate-css="animateInput">
             <v-row>
-              <v-col cols="12" md="7" offset-md="1">
+              <v-col cols="12" sm="7" offset-sm="1">
                 <v-text-field
                   v-model="countryname"
                   :rules="countryRules"
@@ -20,7 +20,7 @@
                   @click:clear="handleClear()"
                 ></v-text-field>
               </v-col>
-              <v-col cols="12" md="3">
+              <v-col cols="12" sm="3">
                 <div class="block-center block-btn">
                   <v-btn
                     type="submit"
@@ -54,7 +54,6 @@
                     label="Search result"
                     single-line
                     hide-details
-                    
                   ></v-text-field>
                 </v-card-title>
                 <v-data-table
@@ -112,10 +111,6 @@ export default {
     countryname: "",
     isLoading: false,
     countryRules: [(v) => !!v || "Country name is required"],
-    animateinput: {
-      classes: "flipInX",
-      delay: 800,
-    },
     tableheaders: [
       { text: "Country", value: "country", class: "font-weight-bold" },
       { text: "City", value: "city" },
@@ -123,13 +118,17 @@ export default {
       { text: "PM25", value: "pm25" },
     ],
     historyitems: [],
+    animateInput: {},
+    animateResult: {},
   }),
+  created() {
+    this.animateInput = this.$store.getters.a_input;
+    this.animateResult = this.$store.getters.a_result;
+  },
   watch: {
-    countryname(newValue) {
-      if (newValue === "" || !newValue) {
-        if (this.result || this.notfound) {
-          this.handleClear();
-        }
+    countryname() {
+      if (this.result || this.notfound) {
+        this.handleClear();
       }
     },
   },
@@ -177,9 +176,9 @@ export default {
         });
     },
     handleClear() {
-      this.countryname = "";
       this.result = false;
       this.notfound = false;
+      this.historyitems = [];
     },
   },
 };

@@ -1,9 +1,6 @@
 <template>
   <div class="insert-air-pollution">
-    <HeaderTitle
-      line1="Insert the Air Pollution Data"
-      line2="by Excel File"
-    />
+    <HeaderTitle line1="Insert the Air Pollution Data" line2="by Excel File" />
     <div>
       <v-form
         @submit.prevent="validate"
@@ -11,7 +8,7 @@
         enctype="multipart/form-data"
       >
         <v-container>
-          <div class="block-transparent-shadow" v-animate-css="animateinput">
+          <div class="block-transparent-shadow" v-animate-css="animateInput">
             <v-row>
               <v-col cols="12">
                 <input
@@ -53,9 +50,9 @@
     </div>
     <div>
       <v-container>
-        <p v-animate-css="animateTextInfo">
-          <span class="font-weight-bold">Note :</span> Please make sure that the excel file contains columns that match
-          the database AirPollutionPM25 table.
+        <p v-animate-css="animateNote">
+          <span class="font-weight-bold">Note :</span> Please make sure that the
+          excel file contains columns that match the AirPollutionPM25 table.
         </p>
       </v-container>
     </div>
@@ -72,17 +69,17 @@ export default {
   },
   data() {
     return {
-      animateinput: {
-        classes: "fadeInUp",
-        delay: 400,
-      },
-      animateTextInfo: {
-        classes: "fadeInUp",
-        delay: 1200,
-      },
       excelfile: "",
       choosed: false,
+      animateInput: {},
+      animateNote: {},
+      animateResult: {}
     };
+  },
+  created() {
+    this.animateInput = this.$store.getters.a_input;
+    this.animateNote = this.$store.getters.a_note;
+    this.animateResult = this.$store.getters.a_result;
   },
   methods: {
     handleSelectFile() {

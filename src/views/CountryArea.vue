@@ -7,7 +7,7 @@
         <v-container>
           <div class="block-transparent-shadow" v-animate-css="animateinput">
             <v-row>
-              <v-col cols="12" md="7" offset-md="1">
+              <v-col cols="12" sm="7" offset-sm="1">
                 <v-text-field
                   v-model="countryname"
                   :rules="countryRules"
@@ -20,7 +20,7 @@
                   @click:clear="handleClear()"
                 ></v-text-field>
               </v-col>
-              <v-col cols="12" md="3">
+              <v-col cols="12" sm="3">
                 <div class="block-center block-btn">
                   <v-btn
                     type="submit"
@@ -39,16 +39,20 @@
 
     <div>
       <v-container v-if="result">
-        <div class="block-transparent-shadow" v-animate-css="'bounce'" ref="blocknanimation">
+        <div
+          class="block-transparent-shadow"
+          v-animate-css="'bounce'"
+          ref="blocknanimation"
+        >
           <v-row>
-            <v-col cols="12" md="10" offset-md="1">
+            <v-col cols="12" sm="10" offset-sm="1">
               <div class="block-center">
                 <span class="title">{{ resultcountryname }}</span>
               </div>
             </v-col>
           </v-row>
           <v-row>
-            <v-col cols="12" md="10" offset-md="1">
+            <v-col cols="12" sm="10" offset-sm="1">
               <span>The area is</span>
               <v-text-field v-model="area" disabled></v-text-field>
             </v-col>
@@ -56,7 +60,11 @@
         </div>
       </v-container>
       <v-container v-if="notfound">
-        <div class="block-transparent-shadow" v-animate-css="'bounce'" ref="blocknanimation">
+        <div
+          class="block-transparent-shadow"
+          v-animate-css="'bounce'"
+          ref="blocknanimation"
+        >
           <v-row>
             <v-col cols="12">
               <div class="block-center">
@@ -93,12 +101,12 @@ export default {
       delay: 800,
     },
   }),
-  updated() {
-    if (this.countryname === "") {
+  watch: {
+    countryname() {
       if (this.result || this.notfound) {
         this.handleClear();
       }
-    }
+    },
   },
   computed: {
     ...mapState(["country"]),
@@ -152,7 +160,6 @@ export default {
         });
     },
     handleClear() {
-      this.countryname = "";
       this.resultcountryname = "";
       this.area = "";
       this.result = false;

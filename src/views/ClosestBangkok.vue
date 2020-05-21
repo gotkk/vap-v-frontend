@@ -5,7 +5,7 @@
       <v-container v-if="result">
         <div
           class="block-transparent-shadow block-map"
-          v-animate-css="'bounce'"
+          v-animate-css="animateResult"
           ref="blocknanimation"
           v-if="visualizeResult.length > 0"
         >
@@ -15,7 +15,7 @@
       <v-container v-if="notfound">
         <div
           class="block-transparent-shadow"
-          v-animate-css="'bounce'"
+          v-animate-css="animateResult"
           ref="blocknanimation"
         >
           <v-row>
@@ -46,7 +46,11 @@ export default {
       result: false,
       notfound: false,
       visualizeResult: [],
+      animateResult: {},
     };
+  },
+  created() {
+    this.animateResult = this.$store.getters.a_result;
   },
   mounted() {
     let loader = this.$loading.show({

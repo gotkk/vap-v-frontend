@@ -3,7 +3,7 @@
     <HeaderTitle line1="MBR Covering Thailand" line2="in 2009" />
     <div>
       <v-container>
-        <p v-animate-css="animateTextInfo">
+        <p v-animate-css="animateNote">
           <span class="font-weight-bold">Note :</span> No data for Thailand in
           2009
         </p>
@@ -13,7 +13,7 @@
       <v-container v-if="result">
         <div
           class="block-transparent-shadow block-map"
-          v-animate-css="'bounce'"
+          v-animate-css="animateResult"
           ref="blocknanimation"
           v-if="visualizePMPoint.length > 0"
         >
@@ -27,7 +27,7 @@
       <v-container v-if="notfound">
         <div
           class="block-transparent-shadow"
-          v-animate-css="'bounce'"
+          v-animate-css="animateResult"
           ref="blocknanimation"
         >
           <v-row>
@@ -59,11 +59,13 @@ export default {
       visualizeMBRPoint: [],
       visualizePMPoint: [],
       visualizeRing: [],
-      animateTextInfo: {
-        classes: "fadeInUp",
-        delay: 1200,
-      },
+      animateNote: {},
+      animateResult: {}
     };
+  },
+  created() {
+    this.animateNote = this.$store.getters.a_note;
+    this.animateResult = this.$store.getters.a_result;
   },
   mounted() {
     let loader = this.$loading.show({

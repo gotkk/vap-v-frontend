@@ -7,7 +7,6 @@
           v-for="(item, index) in menu"
           :key="index"
           :to="item.path"
-          @click="setActiveTitle(item.title)"
         >
           <v-list-item-action>
             <v-icon>
@@ -38,83 +37,17 @@ export default {
   data: () => ({
     drawer: false,
     activeTitle: "Application",
-    menu: [
-      {
-        path: "/",
-        icon: "mdi-home-circle",
-        title: "Home",
-      },
-      {
-        path: "/country_area",
-        icon: "mdi-map",
-        title: "Country Area (Project2)",
-      },
-      {
-        path: "/insert_airpollution",
-        icon: "mdi-arrow-collapse-down",
-        title: "Insert AirPollutionPM25",
-      },
-      {
-        path: "/history_pm25_country",
-        icon: "mdi-file-document",
-        title: "Historical PM25 by Country",
-      },
-      {
-        path: "/total_population",
-        icon: "mdi-file-document",
-        title: "Total of Population",
-      },
-      {
-        path: "/all_point_all_country",
-        icon: "mdi-file-document",
-        title: "All City Point of All Country",
-      },
-      {
-        path: "/closest_bangkok",
-        icon: "mdi-file-document",
-        title: "50 Closest Bangkok",
-      },
-      {
-        path: "/neighbor_thailand",
-        icon: "mdi-file-document",
-        title: "Neighbor of Thailand",
-      },
-      {
-        path: "/mbr_thailand",
-        icon: "mdi-file-document",
-        title: "MBR of Thailand",
-      },
-      {
-        path: "/highest_city",
-        icon: "mdi-file-document",
-        title: "Highest No of City",
-      },
-      {
-        path: "/low_income",
-        icon: "mdi-file-document",
-        title: "Low Income by Year",
-      },
-    ],
+    menu: [],
   }),
-  mounted() {
-    this.initActiveTitle();
-  },
   created() {
+    this.initMenu();
     // this.$vuetify.theme.dark = true;
   },
   methods: {
-    initActiveTitle() {
-      let pathtemp = this.$router.currentRoute.path;
-      for (let i = 0, arri = this.menu.length; i < arri; ++i) {
-        if (this.menu[i].path === pathtemp) {
-          this.setActiveTitle(this.menu[i].title);
-          break;
-        }
-      }
-    },
-    setActiveTitle(title) {
-      this.activeTitle = title;
-    },
+    initMenu(){
+      this.$store.dispatch("getMenu");
+      this.menu = this.$store.getters.allmenu;
+    }
   },
 };
 </script>
