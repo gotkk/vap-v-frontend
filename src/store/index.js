@@ -7,6 +7,7 @@ import TotalPopulation from "./modules/TotalPopulation";
 import VisualAllPointAllCountry from "./modules/VisualAllPointAllCountry";
 import Menu from "./modules/Menu";
 import Animated from "./modules/Animated";
+import MapStyle from './modules/MapStyle';
 
 Vue.use(Vuex);
 
@@ -22,5 +23,6 @@ export default new Vuex.Store({
     VisualAllPointAllCountry,
     Menu,
     Animated,
+    MapStyle
   },
 });

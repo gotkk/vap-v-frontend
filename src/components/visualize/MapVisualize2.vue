@@ -1,5 +1,6 @@
 <template>
-  <div class="MapVisualize2"></div>
+  <!-- <div class="MapVisualize2"></div> -->
+  <v-skeleton-loader class="MapVisualize2" type="image"></v-skeleton-loader>
 </template>
 
 <script>
@@ -9,48 +10,7 @@ export default {
   name: "MapVisualize2",
   props: ["pointlocation1", "pointlocation2", "polygonlocation"],
   mounted() {
-    // lazy load the required ArcGIS API for JavaScript modules and CSS
-    loadModules(
-      [
-        "esri/Map",
-        "esri/views/MapView",
-        "esri/Graphic",
-        "esri/layers/GraphicsLayer",
-      ],
-      { css: true }
-    ).then(([ArcGISMap, MapView, Graphic, GraphicsLayer]) => {
-      const map = new ArcGISMap({
-        basemap: "topo-vector",
-      });
-      this.view = new MapView({
-        container: this.$el,
-        map: map,
-        center: [100.3529072, 13.7251088],
-        zoom: 5,
-      });
-
-      let graphicsLayer = new GraphicsLayer();
-      map.add(graphicsLayer);
-      this.addPoint(this.pointlocation1, Graphic, graphicsLayer);
-
-      let polygon = {
-        type: "polygon",
-        rings: this.polygonlocation,
-      };
-
-      let simpleFillSymbol = {
-        type: "simple-fill",
-        color: [0, 0, 0, 0.7],
-      };
-
-      let polygonGraphic = new Graphic({
-        geometry: polygon,
-        symbol: simpleFillSymbol,
-      });
-
-      graphicsLayer.add(polygonGraphic);
-      this.addPoint(this.pointlocation2, Graphic, graphicsLayer);
-    });
+    this.handleLoadMap();
   },
   beforeDestroy() {
     if (this.view) {
@@ -84,6 +44,49 @@ export default {
           break;
       }
       return color;
+    },
+    handleLoadMap() {
+      loadModules(
+        [
+          "esri/Map",
+          "esri/views/MapView",
+          "esri/Graphic",
+          "esri/layers/GraphicsLayer",
+        ],
+        { css: true }
+      ).then(([ArcGISMap, MapView, Graphic, GraphicsLayer]) => {
+        const map = new ArcGISMap({
+          basemap: "topo-vector",
+        });
+        this.view = new MapView({
+          container: this.$el,
+          map: map,
+          center: [100.3529072, 13.7251088],
+          zoom: 5,
+        });
+
+        let graphicsLayer = new GraphicsLayer();
+        map.add(graphicsLayer);
+        this.addPoint(this.pointlocation1, Graphic, graphicsLayer);
+
+        let polygon = {
+          type: "polygon",
+          rings: this.polygonlocation,
+        };
+
+        let simpleFillSymbol = {
+          type: "simple-fill",
+          color: [0, 0, 0, 0.7],
+        };
+
+        let polygonGraphic = new Graphic({
+          geometry: polygon,
+          symbol: simpleFillSymbol,
+        });
+
+        graphicsLayer.add(polygonGraphic);
+        this.addPoint(this.pointlocation2, Graphic, graphicsLayer);
+      });
     },
     addPoint(pointlocation, Graphic, graphicsLayer) {
       for (let i = 0; i < pointlocation.length; i++) {

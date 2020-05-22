@@ -20,7 +20,7 @@ const mutations = {
       {
         path: "/country_area",
         title: "Country Area (Project2)",
-        icon: "mdi-map",
+        icon: "mdi-calculator",
         detail:
           "Given a country name as input from the user and calculate the country area and then show the result.",
       },
@@ -73,21 +73,21 @@ const mutations = {
       {
         path: "/mbr_thailand",
         title: "MBR of Thailand",
-        icon: "mdi-square",
+        icon: "mdi-rhombus",
         detail:
           "Visualize the four points of MBR covering all city points in Thailand in 2009.",
       },
       {
         path: "/highest_city",
         title: "Highest No of City",
-        icon: "mdi-arrow-up-bold-circle",
+        icon: "mdi-chart-areaspline",
         detail:
           "Visualize all city points of countries having the highest no. of city points in 2011.",
       },
       {
         path: "/low_income",
         title: "Low Income by Year",
-        icon: "mdi-arrow-down-bold-circle-outline",
+        icon: "mdi-chart-bar",
         detail: `Given a year as input from the user and then visualize all the city points which are
             considered as “low income” (as specified in column wbinc16_text ).`,
       },

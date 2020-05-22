@@ -38,4 +38,7 @@ export default {
     0.3em 0.3em 1em rgba(0, 0, 0, 0.3);
   margin-bottom: 20px;
 }
+.v-skeleton-loader__image{
+  height: inherit !important;
+}
 </style>

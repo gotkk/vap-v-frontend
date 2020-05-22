@@ -1,5 +1,6 @@
 <template>
-  <div class="MapVisualize"></div>
+  <!-- <div class="MapVisualize"></div> -->
+  <v-skeleton-loader class="MapVisualize" type="image"></v-skeleton-loader>
 </template>
 
 <script>
@@ -7,62 +8,19 @@ import { loadModules } from "esri-loader";
 
 export default {
   name: "MapVisualize",
-  props: ["pointlocation"],
+  props: ["pointlocation", "mapstyle"],
   mounted() {
-    // lazy load the required ArcGIS API for JavaScript modules and CSS
-    loadModules(
-      [
-        "esri/Map",
-        "esri/views/MapView",
-        "esri/Graphic",
-        "esri/layers/GraphicsLayer",
-      ],
-      { css: true }
-    ).then(([ArcGISMap, MapView,Graphic, GraphicsLayer]) => {
-      const map = new ArcGISMap({
-        basemap: "topo-vector",
-      });
-      this.view = new MapView({
-        container: this.$el,
-        map: map,
-        center: [100.3529072, 13.7251088],
-        zoom: 5,
-      });
-
-      let graphicsLayer = new GraphicsLayer();
-      map.add(graphicsLayer);
-
-
-      for (let i = 0; i < this.pointlocation.length; i++) {
-        let point = {
-          type: "point",
-          longitude: this.pointlocation[i].longitude,
-          latitude: this.pointlocation[i].latitude,
-        };
-
-        let simpleMarkerSymbol = {
-          type: "simple-marker",
-          size: 4,
-          color: this.mapColorRGB(this.pointlocation[i].color_pm25),
-          outline: {
-            color: [0, 0, 0],
-            width: 1,
-          },
-        };
-
-        let pointGraphic = new Graphic({
-          geometry: point,
-          symbol: simpleMarkerSymbol,
-        });
-
-        graphicsLayer.add(pointGraphic);
-      }
-    });
+    this.handleLoadMap();
   },
   beforeDestroy() {
     if (this.view) {
       this.view.container = null;
     }
+  },
+  watch: {
+    mapstyle() {
+      this.handleLoadMap();
+    },
   },
   methods: {
     mapColorRGB(color_pm25) {
@@ -91,6 +49,65 @@ export default {
           break;
       }
       return color;
+    },
+    handleLoadMap() {
+      loadModules(
+        [
+          "esri/Map",
+          "esri/views/MapView",
+          "esri/Graphic",
+          "esri/layers/GraphicsLayer",
+        ],
+        { css: true }
+      )
+        .then(([ArcGISMap, MapView, Graphic, GraphicsLayer]) => {
+          console.log(this.mapstyle);
+          const map = new ArcGISMap({
+            // basemap: "topo-vector",
+            basemap: this.mapstyle,
+          });
+          this.view = new MapView({
+            container: this.$el,
+            map: map,
+            center: [100.3529072, 13.7251088],
+            zoom: 5,
+          });
+
+          let graphicsLayer = new GraphicsLayer();
+          map.add(graphicsLayer);
+
+          for (let i = 0; i < this.pointlocation.length; i++) {
+            let point = {
+              type: "point",
+              longitude: this.pointlocation[i].longitude,
+              latitude: this.pointlocation[i].latitude,
+            };
+
+            let simpleMarkerSymbol = {
+              type: "simple-marker",
+              size: 4,
+              color: this.mapColorRGB(this.pointlocation[i].color_pm25),
+              outline: {
+                color: [0, 0, 0],
+                width: 1,
+              },
+            };
+
+            let pointGraphic = new Graphic({
+              geometry: point,
+              symbol: simpleMarkerSymbol,
+            });
+
+            graphicsLayer.add(pointGraphic);
+          }
+        })
+        .catch((err) => {
+          this.$fire({
+            title: "Error",
+            text: err.message,
+            type: "error",
+          });
+        });
     },
   },
 };
