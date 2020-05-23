@@ -63,8 +63,7 @@ export default {
         .then(([ArcGISMap, MapView, Graphic, GraphicsLayer]) => {
           console.log(this.mapstyle);
           const map = new ArcGISMap({
-            // basemap: "topo-vector",
-            basemap: this.mapstyle,
+            basemap: this.mapstyle || "topo-vector",
           });
           this.view = new MapView({
             container: this.$el,

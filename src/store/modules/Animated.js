@@ -18,7 +18,7 @@ const state = {
   a_mapresult: {
     classes: "fadeInUp",
     delay: 4000,
-  }
+  },
 };
 
 const getters = {

@@ -2,7 +2,7 @@
   <div class="highestNo">
     <HeaderTitle line1="All city points" line2="Having the Highest in 2011" />
     <MapSetting
-
+      v-if="result"
       @setstyle="handleSetMapStyle"
       :animate="animateMapSetting"
     />
@@ -46,7 +46,7 @@
       <v-container v-if="notfound">
         <div
           class="block-transparent-shadow"
-          v-animate-css="animateMapResult"
+          v-animate-css="animateResult"
           ref="blocknanimation"
         >
           <v-row>
@@ -79,12 +79,14 @@ export default {
       notfound: false,
       visualizeResult: [],
       listMapStyle: ["dark-gray-vector", "streets-vector"],
-      mapStyle: "dark-gray-vector",
+      mapStyle: "",
+      animateResult: {},
       animateMapResult: {},
       animateMapSetting: {},
     };
   },
   created() {
+    this.animateResult = this.$store.getters.a_result;
     this.animateMapResult = this.$store.getters.a_mapresult;
     this.animateMapSetting = this.$store.getters.a_mapsetting;
   },
@@ -120,7 +122,7 @@ export default {
             text: "Database Connection Failed!!",
             type: "error",
           });
-        })
+        });
     },
     handleSetMapStyle(value) {
       this.mapStyle = value;

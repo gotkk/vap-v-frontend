@@ -9,18 +9,36 @@
         </p>
       </v-container>
     </div>
+    <MapDataSetting
+      v-if="result"
+      @setstyle="handleSetMapStyle"
+      @setyear="handleSetYear"
+      :animate="animateMapSetting"
+      :yearselected="year"
+    />
     <div>
       <v-container v-if="result">
         <div
           class="block-transparent-shadow block-map"
-          v-animate-css="animateResult"
+          v-animate-css="animateMapResult"
           ref="blocknanimation"
-          v-if="visualizePMPoint.length > 0"
+          v-if="visualizeMBRPoint.length > 0"
         >
-          <MapVisualize
+          <MapVisualize2
+            v-if="year === 'All Year'"
+            :pointlocation1="visualizePMPointAll"
+            :pointlocation2="visualizeMBRPointAll"
+            :polygonlocation="visualizeRingAll"
+            :mapstyle="mapStyle"
+            :year="year"
+          />
+          <MapVisualize2
+            v-else
             :pointlocation1="visualizePMPoint"
             :pointlocation2="visualizeMBRPoint"
             :polygonlocation="visualizeRing"
+            :mapstyle="mapStyle"
+            :year="year"
           />
         </div>
       </v-container>
@@ -45,65 +63,89 @@
 
 <script>
 import HeaderTitle from "../components/home/HeaderTitle";
-import MapVisualize from "../components/visualize/MapVisualize2";
+import MapVisualize2 from "../components/visualize/MapVisualize2";
+import MapDataSetting from "../components/visualize/MapDataSetting";
+
 export default {
   name: "MBRThailand",
   components: {
     HeaderTitle,
-    MapVisualize,
+    MapVisualize2,
+    MapDataSetting,
   },
   data() {
     return {
       result: false,
       notfound: false,
+      year: "",
+      mapStyle: "",
       visualizeMBRPoint: [],
       visualizePMPoint: [],
       visualizeRing: [],
+      visualizeMBRPointAll: [],
+      visualizePMPointAll: [],
+      visualizeRingAll: [],
       animateNote: {},
-      animateResult: {}
+      animateResult: {},
+      animateMapResult: {},
+      animateMapSetting: {},
     };
   },
   created() {
     this.animateNote = this.$store.getters.a_note;
     this.animateResult = this.$store.getters.a_result;
+    this.animateMapResult = this.$store.getters.a_mapresult;
+    this.animateMapSetting = this.$store.getters.a_mapsetting;
+    this.year = "2009";
   },
   mounted() {
-    let loader = this.$loading.show({
-      color: "#ffffff",
-      loader: "bars",
-      backgroundColor: "#000000",
-    });
-    this.$store
-      .dispatch("getMinMaxLatLnThaiForMBR")
-      .then((mbr) => {
-        let { result } = mbr;
-        if (result) {
-          this.visualizeMBRPoint = [...result.mbrpoint];
-          this.visualizePMPoint = [...result.pmpoint];
-          this.visualizeRing = [...result.ring];
-          this.result = true;
-          this.notfound = false;
-        } else {
-          this.result = false;
-          this.notfound = true;
-        }
-        if (this.$refs.blocknanimation) {
-          this.$refs.blocknanimation.classList.add("animated", "bounce");
-          setTimeout(() => {
-            this.$refs.blocknanimation.classList.remove("animated", "bounce");
-          }, [1000]);
-        }
-      })
-      .catch(() => {
-        this.$fire({
-          title: "Error",
-          text: "Database Connection Failed!!",
-          type: "error",
-        });
-      })
-      .finally(() => {
-        loader.hide();
+    this.handleMap();
+  },
+  methods: {
+    handleMap() {
+      let loader = this.$loading.show({
+        color: "#ffffff",
+        loader: "bars",
+        backgroundColor: "#000000",
       });
+      this.$store
+        .dispatch("getMinMaxLatLnThaiForMBR")
+        .then((mbr) => {
+          let { result, result_all } = mbr;
+          if (result && result_all) {
+            this.visualizeMBRPoint = [...result.mbrpoint];
+            this.visualizePMPoint = [...result.pmpoint];
+            this.visualizeRing = [...result.ring];
+
+            this.visualizeMBRPointAll = [...result_all.mbrpoint];
+            this.visualizePMPointAll = [...result_all.pmpoint];
+            this.visualizeRingAll = [...result_all.ring];
+
+            this.result = true;
+            this.notfound = false;
+          } else {
+            this.result = false;
+            this.notfound = true;
+          }
+          setTimeout(() => {
+            loader.hide();
+          }, [3600]);
+        })
+        .catch((err) => {
+          this.$fire({
+            title: "Error",
+            // text: "Database Connection Failed!!",
+            text: err.message,
+            type: "error",
+          });
+        });
+    },
+    handleSetMapStyle(value) {
+      this.mapStyle = value;
+    },
+    handleSetYear(value) {
+      this.year = value;
+    },
   },
 };
 </script>

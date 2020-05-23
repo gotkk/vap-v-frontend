@@ -40,16 +40,22 @@
         </v-container>
       </v-form>
     </div>
+    
+    <MapSetting
+      v-if="result"
+      @setstyle="handleSetMapStyle"
+      :animate="animateMapSetting"
+    />
 
     <div>
       <v-container v-if="result">
         <div
           class="block-transparent-shadow block-map"
-          v-animate-css="animateResult"
+          v-animate-css="animateMapResult"
           ref="blocknanimation"
           v-if="visualizeResult.length > 0"
         >
-          <MapVisualize :pointlocation="visualizeResult" />
+          <MapVisualize :pointlocation="visualizeResult" :mapstyle="mapStyle" />
         </div>
       </v-container>
       <v-container v-if="notfound">
@@ -74,11 +80,14 @@
 <script>
 import HeaderTitle from "../components/home/HeaderTitle";
 import MapVisualize from "../components/visualize/MapVisualize";
+import MapSetting from "../components/visualize/MapSetting";
+
 export default {
   name: "LowIncome",
   components: {
     HeaderTitle,
     MapVisualize,
+    MapSetting,
   },
   data() {
     return {
@@ -92,13 +101,18 @@ export default {
         (v) => /^\d+$/.test(v) || "Year is only positive integer",
         (v) => (v && v.length === 4) || "Year length must be 4",
       ],
+      mapStyle: "",
       animateInput: {},
       animateResult: {},
+      animateMapResult: {},
+      animateMapSetting: {},
     };
   },
   created() {
     this.animateInput = this.$store.getters.a_input;
     this.animateResult = this.$store.getters.a_result;
+    this.animateMapResult = this.$store.getters.a_mapresult;
+    this.animateMapSetting = this.$store.getters.a_mapsetting;
   },
   watch: {
     year() {
@@ -129,12 +143,9 @@ export default {
             this.result = false;
             this.notfound = true;
           }
-          if (this.$refs.blocknanimation) {
-            this.$refs.blocknanimation.classList.add("animated", "bounce");
-            setTimeout(() => {
-              this.$refs.blocknanimation.classList.remove("animated", "bounce");
-            }, [1000]);
-          }
+          setTimeout(() => {
+            this.isLoading = false;
+          }, [3600]);
         })
         .catch(() => {
           this.$fire({
@@ -142,15 +153,15 @@ export default {
             text: "Database Connection Failed!!",
             type: "error",
           });
-        })
-        .finally(() => {
-          this.isLoading = false;
         });
     },
     handleClear() {
       this.visualizeResult = [];
       this.result = false;
       this.notfound = false;
+    },
+    handleSetMapStyle(value) {
+      this.mapStyle = value;
     },
   },
 };

@@ -8,7 +8,13 @@ import { loadModules } from "esri-loader";
 
 export default {
   name: "MapVisualize2",
-  props: ["pointlocation1", "pointlocation2", "polygonlocation"],
+  props: [
+    "pointlocation1",
+    "pointlocation2",
+    "polygonlocation",
+    "mapstyle",
+    "year",
+  ],
   mounted() {
     this.handleLoadMap();
   },
@@ -16,6 +22,14 @@ export default {
     if (this.view) {
       this.view.container = null;
     }
+  },
+  watch: {
+    mapstyle() {
+      this.handleLoadMap();
+    },
+    year() {
+      this.handleLoadMap();
+    },
   },
   methods: {
     mapColorRGB(color_pm25) {
@@ -56,7 +70,7 @@ export default {
         { css: true }
       ).then(([ArcGISMap, MapView, Graphic, GraphicsLayer]) => {
         const map = new ArcGISMap({
-          basemap: "topo-vector",
+          basemap: this.mapstyle || "topo-vector",
         });
         this.view = new MapView({
           container: this.$el,
@@ -67,24 +81,12 @@ export default {
 
         let graphicsLayer = new GraphicsLayer();
         map.add(graphicsLayer);
+
         this.addPoint(this.pointlocation1, Graphic, graphicsLayer);
 
-        let polygon = {
-          type: "polygon",
-          rings: this.polygonlocation,
-        };
+        this.polygonlocation?.[0]?.[0] &&
+          this.addPolygon(Graphic, graphicsLayer);
 
-        let simpleFillSymbol = {
-          type: "simple-fill",
-          color: [0, 0, 0, 0.7],
-        };
-
-        let polygonGraphic = new Graphic({
-          geometry: polygon,
-          symbol: simpleFillSymbol,
-        });
-
-        graphicsLayer.add(polygonGraphic);
         this.addPoint(this.pointlocation2, Graphic, graphicsLayer);
       });
     },
@@ -113,6 +115,23 @@ export default {
 
         graphicsLayer.add(pointGraphic);
       }
+    },
+    addPolygon(Graphic, graphicsLayer) {
+      let polygon = {
+        type: "polygon",
+        rings: this.polygonlocation,
+      };
+
+      let simpleFillSymbol = {
+        type: "simple-fill",
+        color: [0, 0, 0, 0.7],
+      };
+
+      let polygonGraphic = new Graphic({
+        geometry: polygon,
+        symbol: simpleFillSymbol,
+      });
+      graphicsLayer.add(polygonGraphic);
     },
   },
 };

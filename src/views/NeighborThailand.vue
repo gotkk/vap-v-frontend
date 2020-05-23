@@ -9,23 +9,24 @@
         </p>
       </v-container>
     </div>
+    <MapDataSetting
+      v-if="result"
+      @setstyle="handleSetMapStyle"
+      @setyear="handleSetYear"
+      :animate="animateMapSetting"
+    />
     <div>
       <v-container v-if="result">
         <div
           class="block-transparent-shadow block-map"
-          v-animate-css="animateResult"
-          ref="blocknanimation"
+          v-animate-css="animateMapResult"
           v-if="visualizeResult.length > 0"
         >
           <MapVisualize :pointlocation="visualizeResult" />
         </div>
       </v-container>
       <v-container v-if="notfound">
-        <div
-          class="block-transparent-shadow"
-          v-animate-css="animateResult"
-          ref="blocknanimation"
-        >
+        <div class="block-transparent-shadow" v-animate-css="animateResult">
           <v-row>
             <v-col cols="12">
               <div class="block-center">
@@ -42,60 +43,74 @@
 <script>
 import HeaderTitle from "../components/home/HeaderTitle";
 import MapVisualize from "../components/visualize/MapVisualize";
+import MapDataSetting from "../components/visualize/MapDataSetting";
+
 export default {
   name: "NeighborThailand",
   components: {
     HeaderTitle,
     MapVisualize,
+    MapDataSetting,
   },
   data() {
     return {
       result: false,
       notfound: false,
+      year: "",
+      mapStyle: "",
       visualizeResult: [],
       animateNote: {},
       animateResult: {},
+      animateMapResult: {},
+      animateMapSetting: {},
     };
   },
   created() {
     this.animateNote = this.$store.getters.a_note;
     this.animateResult = this.$store.getters.a_result;
+    this.animateMapResult = this.$store.getters.a_mapresult;
+    this.animateMapSetting = this.$store.getters.a_mapsetting;
   },
   mounted() {
-    let loader = this.$loading.show({
-      color: "#ffffff",
-      loader: "bars",
-      backgroundColor: "#000000",
-    });
-    this.$store
-      .dispatch("getNeighborBangkok")
-      .then((closest) => {
-        let { result } = closest;
-        if (result && result[0].length > 0) {
-          this.visualizeResult = [...result[0]];
-          this.result = true;
-          this.notfound = false;
-        } else {
-          this.result = false;
-          this.notfound = true;
-        }
-        if (this.$refs.blocknanimation) {
-          this.$refs.blocknanimation.classList.add("animated", "bounce");
-          setTimeout(() => {
-            this.$refs.blocknanimation.classList.remove("animated", "bounce");
-          }, [1000]);
-        }
-      })
-      .catch(() => {
-        this.$fire({
-          title: "Error",
-          text: "Database Connection Failed!!",
-          type: "error",
-        });
-      })
-      .finally(() => {
-        loader.hide();
+    this.handleMap();
+  },
+  methods: {
+    handleMap() {
+      let loader = this.$loading.show({
+        color: "#ffffff",
+        loader: "bars",
+        backgroundColor: "#000000",
       });
+      this.$store
+        .dispatch("getNeighborBangkok")
+        .then((closest) => {
+          let { result } = closest;
+          if (result && result[0].length > 0) {
+            this.visualizeResult = [...result[0]];
+            this.result = true;
+            this.notfound = false;
+          } else {
+            this.result = false;
+            this.notfound = true;
+          }
+          setTimeout(() => {
+            loader.hide();
+          }, [3600]);
+        })
+        .catch(() => {
+          this.$fire({
+            title: "Error",
+            text: "Database Connection Failed!!",
+            type: "error",
+          });
+        });
+    },
+    handleSetMapStyle(value) {
+      this.mapStyle = value;
+    },
+    handleSetYear(value) {
+      this.year = value;
+    },
   },
 };
 </script>
