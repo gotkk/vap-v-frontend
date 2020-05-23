@@ -56,7 +56,7 @@ export default {
       amimateSeq: [
         {
           classes: "fadeInUp",
-          delay: 100,
+          delay: 200,
         },
         {
           classes: "fadeInUp",
@@ -64,19 +64,19 @@ export default {
         },
         {
           classes: "fadeInUp",
+          delay: 400,
+        },
+        {
+          classes: "fadeInUp",
           delay: 500,
         },
         {
           classes: "fadeInUp",
+          delay: 600,
+        },
+        {
+          classes: "fadeInUp",
           delay: 700,
-        },
-        {
-          classes: "fadeInUp",
-          delay: 900,
-        },
-        {
-          classes: "fadeInUp",
-          delay: 1100,
         },
       ],
       project2: [],

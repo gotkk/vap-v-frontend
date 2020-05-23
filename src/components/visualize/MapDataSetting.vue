@@ -9,7 +9,7 @@
               :items="yearList"
               @change="handleSelectYear"
               label="Select Visualize Other Years"
-              prepend-icon="mdi-map"
+              prepend-icon="mdi-calendar"
               menu-props="auto"
               hide-details
               outlined

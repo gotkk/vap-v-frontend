@@ -8,7 +8,7 @@ import { loadModules } from "esri-loader";
 
 export default {
   name: "MapVisualize",
-  props: ["pointlocation", "mapstyle"],
+  props: ["pointlocation", "mapstyle", "year"],
   mounted() {
     this.handleLoadMap();
   },
@@ -21,6 +21,9 @@ export default {
     mapstyle() {
       this.handleLoadMap();
     },
+    year(){
+      this.handleLoadMap();
+    }
   },
   methods: {
     mapColorRGB(color_pm25) {

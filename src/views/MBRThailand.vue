@@ -92,7 +92,7 @@ export default {
     };
   },
   created() {
-    this.animateNote = this.$store.getters.a_note;
+    this.animateNote = this.$store.getters.a_note_map;
     this.animateResult = this.$store.getters.a_result;
     this.animateMapResult = this.$store.getters.a_mapresult;
     this.animateMapSetting = this.$store.getters.a_mapsetting;

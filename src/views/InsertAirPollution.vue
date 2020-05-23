@@ -1,6 +1,7 @@
 <template>
   <div class="insert-air-pollution">
     <HeaderTitle line1="Insert the Air Pollution Data" line2="by Excel File" />
+
     <div>
       <v-form
         @submit.prevent="validate"
@@ -48,12 +49,38 @@
         </v-container>
       </v-form>
     </div>
+
     <div>
       <v-container>
-        <p v-animate-css="animateNote">
-          <span class="font-weight-bold">Note :</span> Please make sure that the
-          excel file contains columns that match the AirPollutionPM25 table.
-        </p>
+        <v-row>
+          <v-col>
+            <p v-animate-css="animateNote">
+              <span class="font-weight-bold">Note :</span> Please make sure that
+              the excel file contains columns that match the AirPollutionPM25
+              table as follow the template and use data only first sheet.
+            </p>
+          </v-col>
+        </v-row>
+      </v-container>
+    </div>
+
+    <div>
+      <v-container>
+        <v-row>
+          <v-col class="d-flex justify-center pb-10">
+            <div v-animate-css="animateDownload">
+              <v-btn
+                color="blue-grey"
+                class="ma-2 white--text"
+                :loading="loadingDownload"
+                @click="handleDownload"
+              >
+                Download Template
+                <v-icon right dark>mdi-cloud-download</v-icon>
+              </v-btn>
+            </div>
+          </v-col>
+        </v-row>
       </v-container>
     </div>
   </div>
@@ -71,15 +98,18 @@ export default {
     return {
       excelfile: "",
       choosed: false,
+      loadingDownload: false,
       animateInput: {},
       animateNote: {},
-      animateResult: {}
+      animateResult: {},
+      animateDownload: {},
     };
   },
   created() {
     this.animateInput = this.$store.getters.a_input;
     this.animateNote = this.$store.getters.a_note;
     this.animateResult = this.$store.getters.a_result;
+    this.animateDownload = this.$store.getters.a_download;
   },
   methods: {
     handleSelectFile() {
@@ -161,9 +191,21 @@ export default {
             text: err.response.data.message,
             type: "error",
           });
+        });
+    },
+    handleDownload() {
+      this.loadingDownload = true;
+      this.$store
+        .dispatch("getInsertTemplate")
+        .catch((err) => {
+          this.$fire({
+            title: "Error",
+            text: err.message,
+            type: "error",
+          });
         })
         .finally(() => {
-          loader.hide();
+          this.loadingDownload = false;
         });
     },
   },

@@ -1,4 +1,6 @@
 const axios = require("axios");
+const FileDownload = require("js-file-download");
+// const fs = require("fs");
 
 const state = {
   airpollutuion: "",
@@ -7,14 +9,14 @@ const state = {
   neighborbangkok: "",
   pointMBR: "",
   highestpoint: "",
-  lowincome: ""
+  lowincome: "",
 };
 
 const getters = {
-    airPollutuionStatus: (state) => state.airpollutuionstatus,
-    airpollutuion: (state) => state.airpollutuion,
-    closestBangkok: (state) => state.closestbangkok,
-    neighborBangkok: (state) => state.neighborbangkok,
+  airPollutuionStatus: (state) => state.airpollutuionstatus,
+  airpollutuion: (state) => state.airpollutuion,
+  closestBangkok: (state) => state.closestbangkok,
+  neighborBangkok: (state) => state.neighborbangkok,
 };
 
 const mutations = {
@@ -24,20 +26,20 @@ const mutations = {
   setAirPollutuionStatus(state, airpollutuion) {
     state.airpollutuion = airpollutuion;
   },
-  setClosestBangkok(state, closestbangkok){
+  setClosestBangkok(state, closestbangkok) {
     state.closestbangkok = closestbangkok;
   },
-  setNeighborBangkok(state, neighborbangkok){
+  setNeighborBangkok(state, neighborbangkok) {
     state.neighborbangkok = neighborbangkok;
   },
-  setPointMBR(state, pointMBR){
-    state.pointMBR = pointMBR
+  setPointMBR(state, pointMBR) {
+    state.pointMBR = pointMBR;
   },
-  setHighestPoint(state, highestpoint){
-    state.highestpoint = highestpoint
+  setHighestPoint(state, highestpoint) {
+    state.highestpoint = highestpoint;
   },
-  setLowIncome(state, lowincome){
-    state.lowincome = lowincome
+  setLowIncome(state, lowincome) {
+    state.lowincome = lowincome;
   },
 };
 
@@ -66,40 +68,81 @@ const actions = {
         });
     });
   },
-  updateColumGeom({ commit }){
+  updateColumGeom({ commit }) {
     return new Promise((resolve, reject) => {
-        axios.get( `${process.env.VUE_APP_SPDB_BACKEND_APP || "http://localhost:5000/"}airpollution/update_geometry`)
+      axios
+        .get(
+          `${process.env.VUE_APP_SPDB_BACKEND_APP ||
+            "http://localhost:5000/"}airpollution/update_geometry`
+        )
         .then((res) => {
-            commit("setAirPollutuionStatus", res.data);
-            resolve(res.data);
+          commit("setAirPollutuionStatus", res.data);
+          resolve(res.data);
         })
         .catch((err) => {
-            reject(err);
-        })
+          reject(err);
+        });
     });
   },
-  get50ClosestBangkok({commit}){
+  getInsertTemplate() {
     return new Promise((resolve, reject) => {
-      axios.get( `${process.env.VUE_APP_SPDB_BACKEND_APP || "http://localhost:5000/"}airpollution/50closest_bangkok`)
-      .then((res) => {
+      axios
+        .post(
+          `${process.env.VUE_APP_SPDB_BACKEND_APP ||
+            "http://localhost:5000/"}airpollution/download_template`,
+          null,
+          {
+            headers: {
+              "Content-Disposition": "attachment; filename=InsertTemplate.xlsx",
+              "Content-Type":
+                "application/vnd.openxmlformats-officedocument.Sheet1.sheet",
+            },
+            responseType: "arraybuffer",
+          }
+        )
+        .then((res) => {
+          // const url = window.URL.createObjectURL(new Blob([res.data]));
+          // const link = document.createElement("a");
+          // link.href = url;
+          // link.setAttribute("download", "InsertTemplate.xlsx");
+          // document.body.appendChild(link);
+          // link.click();
+          FileDownload(res.data, "InsertTemplate.xlsx");
+          resolve();
+        })
+        .catch((err) => reject(err));
+    });
+  },
+  get50ClosestBangkok({ commit }) {
+    return new Promise((resolve, reject) => {
+      axios
+        .get(
+          `${process.env.VUE_APP_SPDB_BACKEND_APP ||
+            "http://localhost:5000/"}airpollution/50closest_bangkok`
+        )
+        .then((res) => {
           commit("setClosestBangkok", res.data);
           resolve(res.data);
-      })
-      .catch((err) => {
+        })
+        .catch((err) => {
           reject(err);
-      })
+        });
     });
   },
-  getNeighborBangkok({commit}){
+  getNeighborBangkok({ commit }) {
     return new Promise((resolve, reject) => {
-      axios.get( `${process.env.VUE_APP_SPDB_BACKEND_APP || "http://localhost:5000/"}airpollution/neighbor_bangkok`)
-      .then((res) => {
+      axios
+        .get(
+          `${process.env.VUE_APP_SPDB_BACKEND_APP ||
+            "http://localhost:5000/"}airpollution/neighbor_bangkok`
+        )
+        .then((res) => {
           commit("setNeighborBangkok", res.data);
           resolve(res.data);
-      })
-      .catch((err) => {
+        })
+        .catch((err) => {
           reject(err);
-      })
+        });
     });
   },
   getMinMaxLatLnThaiForMBR({ commit }) {

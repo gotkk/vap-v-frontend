@@ -14,15 +14,27 @@
       @setstyle="handleSetMapStyle"
       @setyear="handleSetYear"
       :animate="animateMapSetting"
+      :yearselected="year"
     />
     <div>
       <v-container v-if="result">
         <div
           class="block-transparent-shadow block-map"
           v-animate-css="animateMapResult"
-          v-if="visualizeResult.length > 0"
+          v-if="visualizeResultAll.length > 0"
         >
-          <MapVisualize :pointlocation="visualizeResult" />
+          <MapVisualize
+            v-if="year === 'All Year'"
+            :pointlocation="visualizeResultAll"
+            :mapstyle="mapStyle"
+            :year="year"
+          />
+          <MapVisualize
+            v-else
+            :pointlocation="visualizeResult"
+            :mapstyle="mapStyle"
+            :year="year"
+          />
         </div>
       </v-container>
       <v-container v-if="notfound">
@@ -59,6 +71,7 @@ export default {
       year: "",
       mapStyle: "",
       visualizeResult: [],
+      visualizeResultAll: [],
       animateNote: {},
       animateResult: {},
       animateMapResult: {},
@@ -66,10 +79,11 @@ export default {
     };
   },
   created() {
-    this.animateNote = this.$store.getters.a_note;
+    this.animateNote = this.$store.getters.a_note_map;
     this.animateResult = this.$store.getters.a_result;
     this.animateMapResult = this.$store.getters.a_mapresult;
     this.animateMapSetting = this.$store.getters.a_mapsetting;
+    this.year = "2018";
   },
   mounted() {
     this.handleMap();
@@ -84,9 +98,10 @@ export default {
       this.$store
         .dispatch("getNeighborBangkok")
         .then((closest) => {
-          let { result } = closest;
-          if (result && result[0].length > 0) {
+          let { result, result_all } = closest;
+          if (result_all) {
             this.visualizeResult = [...result[0]];
+            this.visualizeResultAll = [...result_all[0]];
             this.result = true;
             this.notfound = false;
           } else {
@@ -97,10 +112,10 @@ export default {
             loader.hide();
           }, [3600]);
         })
-        .catch(() => {
+        .catch((err) => {
           this.$fire({
             title: "Error",
-            text: "Database Connection Failed!!",
+            text: err.message,
             type: "error",
           });
         });
