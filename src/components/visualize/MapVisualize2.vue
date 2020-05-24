@@ -54,7 +54,7 @@ export default {
           color = [255, 123, 0];
           break;
         default:
-          color = [156, 156, 156];
+          color = [156, 156, 156, 0.7];
           break;
       }
       return color;

@@ -58,15 +58,7 @@
         </div>
       </v-container>
       <v-container v-if="notfound">
-        <div class="block-transparent-shadow" v-animate-css="animateResult">
-          <v-row>
-            <v-col cols="12">
-              <div class="block-center">
-                <span>Notfound</span>
-              </div>
-            </v-col>
-          </v-row>
-        </div>
+        <ResultNotfound :animate="animateResult" />
       </v-container>
     </div>
   </div>
@@ -76,6 +68,7 @@
 import HeaderTitle from "../components/home/HeaderTitle";
 import MapVisualize from "../components/visualize/MapVisualize";
 import MapSetting from "../components/visualize/MapSetting";
+import ResultNotfound from "../components/mock/ResultNotfound";
 
 export default {
   name: "AllPointAllCountry",
@@ -83,6 +76,7 @@ export default {
     HeaderTitle,
     MapVisualize,
     MapSetting,
+    ResultNotfound,
   },
   data() {
     return {
@@ -130,7 +124,7 @@ export default {
         .dispatch("getAllCityPointAllCountrybyYear", this.year)
         .then((visualize) => {
           const { result } = visualize;
-          if (result && result[0].length > 0) {
+          if (result?.[0]?.length > 0) {
             this.visualizeResult = [...result[0]];
             this.result = true;
             this.notfound = false;
@@ -143,10 +137,11 @@ export default {
             this.isLoading = false;
           }
         })
-        .catch(() => {
+        .catch((err) => {
+          this.isLoading = false;
           this.$fire({
             title: "Error",
-            text: "Database Connection Failed!!",
+            text: err.message,
             type: "error",
           });
         });

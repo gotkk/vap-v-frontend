@@ -66,7 +66,6 @@
         <div
           class="block-transparent-shadow"
           v-animate-css="animateResult"
-          ref="blocknanimation"
           v-if="
             Object.keys(totalpopulation).length > 0 &&
               totalpopulation.constructor === Object
@@ -84,19 +83,7 @@
         </div>
       </v-container>
       <v-container v-if="notfound">
-        <div
-          class="block-transparent-shadow"
-          v-animate-css="animateResult"
-          ref="blocknanimation"
-        >
-          <v-row>
-            <v-col cols="12">
-              <div class="block-center">
-                <span>Notfound</span>
-              </div>
-            </v-col>
-          </v-row>
-        </div>
+        <ResultNotfound :animate="animateResult"/>
       </v-container>
     </div>
   </div>
@@ -105,11 +92,13 @@
 <script>
 // @ is an alias to /src
 import HeaderTitle from "../components/home/HeaderTitle";
+import ResultNotfound from "../components/mock/ResultNotfound";
 
 export default {
   name: "TotalPopulation",
   components: {
     HeaderTitle,
+    ResultNotfound,
   },
   data: () => ({
     result: false,
@@ -163,7 +152,7 @@ export default {
         .dispatch("getTotalPopulationbyYearandColorPM25", forminput)
         .then((population) => {
           const { result } = population;
-          if (result && result[0].length > 0) {
+          if (result?.[0]?.length > 0) {
             this.totalpopulation = { ...result[0][0] };
             this.result = true;
             this.notfound = false;
@@ -171,17 +160,11 @@ export default {
             this.result = false;
             this.notfound = true;
           }
-          if (this.$refs.blocknanimation) {
-            this.$refs.blocknanimation.classList.add("animated", "bounce");
-            setTimeout(() => {
-              this.$refs.blocknanimation.classList.remove("animated", "bounce");
-            }, [1000]);
-          }
         })
-        .catch(() => {
+        .catch((err) => {
           this.$fire({
             title: "Error",
-            text: "Database Connection Failed!!",
+            text: err.message,
             type: "error",
           });
         })

@@ -2,7 +2,7 @@
   <div class="neighborThailand">
     <HeaderTitle line1="Visualize Neighbor" line2="of Thailand 2018" />
     <div>
-      <v-container>
+      <v-container  v-if="result&&nodata">
         <p v-animate-css="animateNote">
           <span class="font-weight-bold">Note :</span> No data for this in the
           year 2018
@@ -38,15 +38,7 @@
         </div>
       </v-container>
       <v-container v-if="notfound">
-        <div class="block-transparent-shadow" v-animate-css="animateResult">
-          <v-row>
-            <v-col cols="12">
-              <div class="block-center">
-                <span>Notfound</span>
-              </div>
-            </v-col>
-          </v-row>
-        </div>
+        <ResultNotfound :animate="animateResult"/>
       </v-container>
     </div>
   </div>
@@ -56,6 +48,7 @@
 import HeaderTitle from "../components/home/HeaderTitle";
 import MapVisualize from "../components/visualize/MapVisualize";
 import MapDataSetting from "../components/visualize/MapDataSetting";
+import ResultNotfound from "../components/mock/ResultNotfound";
 
 export default {
   name: "NeighborThailand",
@@ -63,11 +56,13 @@ export default {
     HeaderTitle,
     MapVisualize,
     MapDataSetting,
+    ResultNotfound,
   },
   data() {
     return {
       result: false,
       notfound: false,
+      nodata: false,
       year: "",
       mapStyle: "",
       visualizeResult: [],
@@ -99,20 +94,25 @@ export default {
         .dispatch("getNeighborBangkok")
         .then((closest) => {
           let { result, result_all } = closest;
-          if (result_all) {
+          if (result_all?.[0]?.length > 0) {
+            if(result?.[0]?.length === 0){
+              this.nodata = true;
+            }
             this.visualizeResult = [...result[0]];
             this.visualizeResultAll = [...result_all[0]];
             this.result = true;
             this.notfound = false;
+            setTimeout(() => {
+              loader.hide();
+            }, [3600]);
           } else {
             this.result = false;
             this.notfound = true;
-          }
-          setTimeout(() => {
             loader.hide();
-          }, [3600]);
+          }
         })
         .catch((err) => {
+          loader.hide();
           this.$fire({
             title: "Error",
             text: err.message,

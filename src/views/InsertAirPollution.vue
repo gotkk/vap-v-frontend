@@ -186,6 +186,7 @@ export default {
           });
         })
         .catch((err) => {
+          loader.hide();
           this.$fire({
             title: "Error",
             text: err.response.data.message,

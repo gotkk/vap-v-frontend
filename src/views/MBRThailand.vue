@@ -2,7 +2,7 @@
   <div class="MBRThailand">
     <HeaderTitle line1="MBR Covering Thailand" line2="in 2009" />
     <div>
-      <v-container>
+      <v-container v-if="result&&nodata">
         <p v-animate-css="animateNote">
           <span class="font-weight-bold">Note :</span> No data for Thailand in
           2009
@@ -21,7 +21,6 @@
         <div
           class="block-transparent-shadow block-map"
           v-animate-css="animateMapResult"
-          ref="blocknanimation"
           v-if="visualizeMBRPoint.length > 0"
         >
           <MapVisualize2
@@ -43,19 +42,7 @@
         </div>
       </v-container>
       <v-container v-if="notfound">
-        <div
-          class="block-transparent-shadow"
-          v-animate-css="animateResult"
-          ref="blocknanimation"
-        >
-          <v-row>
-            <v-col cols="12">
-              <div class="block-center">
-                <span>Notfound</span>
-              </div>
-            </v-col>
-          </v-row>
-        </div>
+        <ResultNotfound :animate="animateResult" />
       </v-container>
     </div>
   </div>
@@ -65,6 +52,7 @@
 import HeaderTitle from "../components/home/HeaderTitle";
 import MapVisualize2 from "../components/visualize/MapVisualize2";
 import MapDataSetting from "../components/visualize/MapDataSetting";
+import ResultNotfound from "../components/mock/ResultNotfound";
 
 export default {
   name: "MBRThailand",
@@ -72,11 +60,13 @@ export default {
     HeaderTitle,
     MapVisualize2,
     MapDataSetting,
+    ResultNotfound,
   },
   data() {
     return {
       result: false,
       notfound: false,
+      nodata: false,
       year: "",
       mapStyle: "",
       visualizeMBRPoint: [],
@@ -112,7 +102,11 @@ export default {
         .dispatch("getMinMaxLatLnThaiForMBR")
         .then((mbr) => {
           let { result, result_all } = mbr;
-          if (result && result_all) {
+          if (result_all?.pmpoint?.length > 0) {
+            console.log(result);
+            if(result?.pmpoint?.length === 0){
+              this.nodata = true;
+            }
             this.visualizeMBRPoint = [...result.mbrpoint];
             this.visualizePMPoint = [...result.pmpoint];
             this.visualizeRing = [...result.ring];
@@ -123,15 +117,17 @@ export default {
 
             this.result = true;
             this.notfound = false;
+            setTimeout(() => {
+              loader.hide();
+            }, [3600]);
           } else {
             this.result = false;
             this.notfound = true;
-          }
-          setTimeout(() => {
             loader.hide();
-          }, [3600]);
+          }
         })
         .catch((err) => {
+          loader.hide();
           this.$fire({
             title: "Error",
             // text: "Database Connection Failed!!",

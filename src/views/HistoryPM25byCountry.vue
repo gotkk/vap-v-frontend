@@ -39,7 +39,7 @@
 
     <div>
       <v-container v-if="result">
-        <div v-animate-css="'bounce'" ref="blocknanimation">
+        <div v-animate-css="animateResult" >
           <v-row>
             <v-col cols="12">
               <v-card class="block-transparent-shadow">
@@ -76,19 +76,7 @@
         </div>
       </v-container>
       <v-container v-if="notfound">
-        <div
-          class="block-transparent-shadow"
-          v-animate-css="'bounce'"
-          ref="blocknanimation"
-        >
-          <v-row>
-            <v-col cols="12">
-              <div class="block-center">
-                <span>Notfound</span>
-              </div>
-            </v-col>
-          </v-row>
-        </div>
+        <ResultNotfound :animate="animateResult"/>
       </v-container>
     </div>
   </div>
@@ -96,13 +84,14 @@
 
 <script>
 // @ is an alias to /src
-import { mapState } from "vuex";
 import HeaderTitle from "../components/home/HeaderTitle";
+import ResultNotfound from "../components/mock/ResultNotfound";
 
 export default {
   name: "HistoryPM25byCountry",
   components: {
     HeaderTitle,
+    ResultNotfound,
   },
   data: () => ({
     search: "",
@@ -132,9 +121,6 @@ export default {
       }
     },
   },
-  computed: {
-    ...mapState(["historypm25"]),
-  },
   methods: {
     validate() {
       if (this.countryname === "" || !this.countryname) {
@@ -149,7 +135,7 @@ export default {
         .dispatch("getHistorypm25byCountry", this.countryname)
         .then((history) => {
           let { result } = history;
-          if (history.result && history.result[0].length > 0) {
+          if (result?.[0]?.length > 0) {
             this.historyitems = [...result[0]];
             this.result = true;
             this.notfound = false;
@@ -157,17 +143,11 @@ export default {
             this.result = false;
             this.notfound = true;
           }
-          if (this.$refs.blocknanimation) {
-            this.$refs.blocknanimation.classList.add("animated", "bounce");
-            setTimeout(() => {
-              this.$refs.blocknanimation.classList.remove("animated", "bounce");
-            }, [1000]);
-          }
         })
-        .catch(() => {
+        .catch((err) => {
           this.$fire({
             title: "Error",
-            text: "Database Connection Failed!!",
+            text: err.message,
             type: "error",
           });
         })

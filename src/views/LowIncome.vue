@@ -40,7 +40,7 @@
         </v-container>
       </v-form>
     </div>
-    
+
     <MapSetting
       v-if="result"
       @setstyle="handleSetMapStyle"
@@ -52,26 +52,13 @@
         <div
           class="block-transparent-shadow block-map"
           v-animate-css="animateMapResult"
-          ref="blocknanimation"
           v-if="visualizeResult.length > 0"
         >
           <MapVisualize :pointlocation="visualizeResult" :mapstyle="mapStyle" />
         </div>
       </v-container>
       <v-container v-if="notfound">
-        <div
-          class="block-transparent-shadow"
-          v-animate-css="animateResult"
-          ref="blocknanimation"
-        >
-          <v-row>
-            <v-col cols="12">
-              <div class="block-center">
-                <span>Notfound</span>
-              </div>
-            </v-col>
-          </v-row>
-        </div>
+        <ResultNotfound :animate="animateResult" />
       </v-container>
     </div>
   </div>
@@ -81,6 +68,7 @@
 import HeaderTitle from "../components/home/HeaderTitle";
 import MapVisualize from "../components/visualize/MapVisualize";
 import MapSetting from "../components/visualize/MapSetting";
+import ResultNotfound from "../components/mock/ResultNotfound";
 
 export default {
   name: "LowIncome",
@@ -88,6 +76,7 @@ export default {
     HeaderTitle,
     MapVisualize,
     MapSetting,
+    ResultNotfound,
   },
   data() {
     return {
@@ -135,22 +124,24 @@ export default {
         .dispatch("getLowIncome", this.year)
         .then((visualize) => {
           const { result } = visualize;
-          if (result && result[0].length > 0) {
+          if (result?.[0]?.length > 0) {
             this.visualizeResult = [...result[0]];
             this.result = true;
             this.notfound = false;
+            setTimeout(() => {
+              this.isLoading = false;
+            }, [3600]);
           } else {
             this.result = false;
             this.notfound = true;
-          }
-          setTimeout(() => {
             this.isLoading = false;
-          }, [3600]);
+          }
         })
-        .catch(() => {
+        .catch((err) => {
+          this.isLoading = false;
           this.$fire({
             title: "Error",
-            text: "Database Connection Failed!!",
+            text: err.message,
             type: "error",
           });
         });
