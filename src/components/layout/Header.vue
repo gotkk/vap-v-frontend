@@ -21,7 +21,7 @@
     </v-navigation-drawer>
 
     <div>
-      <div class="block-center btn-nav-menu" @click.stop="drawer = !drawer">
+      <div class="d-flex justify-center align-center btn-nav-menu" @click.stop="drawer = !drawer">
         <v-icon size="34">mdi-menu</v-icon>
       </div>
     </div>

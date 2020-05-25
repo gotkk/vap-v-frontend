@@ -6,25 +6,6 @@
       @setstyle="handleSetMapStyle"
       :animate="animateMapSetting"
     />
-    <!-- <div>
-      <v-container>
-        <div class="block-transparent-shadow">
-          <v-row>
-            <v-col cols="10" offset="1">
-              <v-select
-                v-model="mapStyle"
-                :items="listMapStyle"
-                label="Select Map Visualize Style"
-                prepend-icon="map"
-                menu-props="auto"
-                hide-details
-                outlined
-              ></v-select>
-            </v-col>
-          </v-row>
-        </div>
-      </v-container>
-    </div> -->
     <div>
       <v-container v-if="result">
         <v-row>
@@ -123,9 +104,4 @@ export default {
 };
 </script>
 
-<style scoped>
-.highestNo .block-map {
-  height: 90vh;
-  width: 100%;
-}
-</style>
+<style scoped></style>

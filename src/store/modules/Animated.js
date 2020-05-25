@@ -27,6 +27,32 @@ const state = {
     classes: "fadeInUp",
     delay: 4000,
   },
+  a_home: [
+    {
+      classes: "fadeInUp",
+      delay: 100,
+    },
+    {
+      classes: "fadeInUp",
+      delay: 200,
+    },
+    {
+      classes: "fadeInUp",
+      delay: 300,
+    },
+    {
+      classes: "fadeInUp",
+      delay: 400,
+    },
+    {
+      classes: "fadeInUp",
+      delay: 500,
+    },
+    {
+      classes: "fadeInUp",
+      delay: 600,
+    },
+  ],
 };
 
 const getters = {
@@ -37,6 +63,7 @@ const getters = {
   a_mapsetting: (state) => state.a_mapsetting,
   a_mapresult: (state) => state.a_mapresult,
   a_download: (state) => state.a_download,
+  a_home: (state) => state.a_home,
 };
 
 const mutations = {};

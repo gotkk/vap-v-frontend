@@ -19,11 +19,14 @@
                   hidden="hidden"
                   @change="handleSelectFile"
                 />
-                <div class="block-center btn-upload" @click="handleChoose">
+                <div
+                  class="block-center btn-upload-download"
+                  @click="handleChoose"
+                >
                   <v-icon size="60">mdi-file-excel</v-icon>
                   <br />
                   <div>
-                    <span style="fontWeight: bold">Upload Excel File : </span>
+                    <span class="font-weight-bold">Upload Excel File : </span>
                     <span ref="file">No File Chosen</span>
                   </div>
                 </div>
@@ -36,11 +39,13 @@
                     <v-btn
                       type="submit"
                       form="input-excel-file"
-                      color="grey lighten-1"
+                      class="white--text"
+                      color="teal"
                       width="200"
-                      >Upload File
-                      <v-icon right dark>mdi-cloud-upload</v-icon></v-btn
                     >
+                      <v-icon dark>mdi-cloud-upload</v-icon>
+                      <span class="pl-3">Upload File</span>
+                    </v-btn>
                   </div>
                 </div>
               </v-col>
@@ -50,19 +55,7 @@
       </v-form>
     </div>
 
-    <div>
-      <v-container>
-        <v-row>
-          <v-col>
-            <p v-animate-css="animateNote">
-              <span class="font-weight-bold">Note :</span> Please make sure that
-              the excel file contains columns that match the AirPollutionPM25
-              table as follow the template and use data only first sheet.
-            </p>
-          </v-col>
-        </v-row>
-      </v-container>
-    </div>
+    <Note :animate="animateNote" :text="note" />
 
     <div>
       <v-container>
@@ -70,13 +63,13 @@
           <v-col class="d-flex justify-center pb-10">
             <div v-animate-css="animateDownload">
               <v-btn
-                color="blue-grey"
+                color="green darken-3"
                 class="ma-2 white--text"
                 :loading="loadingDownload"
                 @click="handleDownload"
               >
-                Download Template
-                <v-icon right dark>mdi-cloud-download</v-icon>
+                <v-icon dark>mdi-cloud-download</v-icon>
+                <span class="pl-3">Download Template</span>
               </v-btn>
             </div>
           </v-col>
@@ -89,15 +82,19 @@
 <script>
 import { mapState } from "vuex";
 import HeaderTitle from "../components/home/HeaderTitle";
+import Note from "../components/mock/Note";
 
 export default {
   name: "InsertAirPollution",
   components: {
     HeaderTitle,
+    Note,
   },
   data() {
     return {
       excelfile: "",
+      note: `Please make sure that the excel file contains columns that match 
+      the AirPollutionPM25 table as follow the template and use data only first sheet.`,
       choosed: false,
       loadingDownload: false,
     };
@@ -113,7 +110,6 @@ export default {
   methods: {
     handleSelectFile() {
       this.excelfile = this.$refs.excel_file.files[0];
-      // console.log("selected");
       this.$refs.file.innerHTML = this.$refs.excel_file.files[0].name;
       this.choosed = true;
       setTimeout(() => {
@@ -212,18 +208,4 @@ export default {
 };
 </script>
 
-<style scoped>
-.insert-air-pollution .btn-upload {
-  background-color: #209f62;
-  flex-direction: column;
-  width: 100%;
-  height: 240px;
-  border: solid;
-  border-width: 2px;
-  border-color: #bdbdbd;
-  cursor: pointer;
-}
-.insert-air-pollution .btn-upload:hover {
-  background-color: #0e723b;
-}
-</style>
+<style scoped></style>

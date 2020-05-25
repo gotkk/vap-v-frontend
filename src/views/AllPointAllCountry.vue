@@ -29,10 +29,13 @@
                   <v-btn
                     type="submit"
                     form="visual-input"
-                    color="grey lighten-1"
+                    color="teal"
+                    class="white--text"
                     block
-                    >Search</v-btn
                   >
+                    <v-icon>mdi-magnify</v-icon>
+                    <span>Search</span>
+                  </v-btn>
                 </div>
               </v-col>
             </v-row>
@@ -102,13 +105,13 @@ export default {
     },
   },
   computed: {
-       // ...mapState(["Animated"])
+    // ...mapState(["Animated"])
     ...mapState({
-      animateInput: state => state?.animated?.a_input,
-      animateResult: state => state?.animated?.a_result,
-      animateMapResult: state => state?.animated?.a_mapresult,
-      animateMapSetting: state => state?.animated?.a_mapsetting,
-    })
+      animateInput: (state) => state?.animated?.a_input,
+      animateResult: (state) => state?.animated?.a_result,
+      animateMapResult: (state) => state?.animated?.a_mapresult,
+      animateMapSetting: (state) => state?.animated?.a_mapsetting,
+    }),
   },
   methods: {
     validate() {
@@ -158,13 +161,4 @@ export default {
 };
 </script>
 
-<style scoped>
-.allPointAllCountry .block-btn {
-  height: 100%;
-}
-
-.allPointAllCountry .block-map {
-  height: 90vh;
-  width: 100%;
-}
-</style>
+<style scoped></style>

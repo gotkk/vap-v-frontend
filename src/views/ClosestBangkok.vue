@@ -96,9 +96,4 @@ export default {
 };
 </script>
 
-<style scoped>
-.closestBangkok .block-map {
-  height: 90vh;
-  width: 100%;
-}
-</style>
+<style scoped></style>

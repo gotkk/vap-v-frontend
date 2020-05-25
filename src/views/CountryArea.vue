@@ -169,8 +169,4 @@ export default {
 };
 </script>
 
-<style scoped>
-.countryArea .block-btn {
-  height: 100%;
-}
-</style>
+<style scoped></style>

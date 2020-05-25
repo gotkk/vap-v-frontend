@@ -25,8 +25,8 @@ export default {
   },
   computed: {
     ...mapState({
-      animateInput: state => state?.animated?.a_input,
-    })
+      animateInput: (state) => state?.animated?.a_input,
+    }),
   },
   methods: {
     handleDownload() {
@@ -48,5 +48,4 @@ export default {
 };
 </script>
 
-<style scoped>
-</style>
+<style scoped></style>

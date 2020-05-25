@@ -49,10 +49,13 @@
                   <v-btn
                     type="submit"
                     form="get-population"
-                    color="grey lighten-1"
+                    color="teal"
+                    class="white--text"
                     width="200"
-                    >Search</v-btn
                   >
+                    <v-icon>mdi-magnify</v-icon>
+                    <span>Search</span>
+                  </v-btn>
                 </div>
               </v-col>
             </v-row>
@@ -182,8 +185,4 @@ export default {
 };
 </script>
 
-<style scoped>
-.totalPopulation .block-btn {
-  height: 100%;
-}
-</style>
+<style scoped></style>

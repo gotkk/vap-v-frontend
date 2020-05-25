@@ -1,5 +1,14 @@
 const state = {
-  mapstyle: ["dark-gray-vector", "streets-vector"],
+  mapstyle: [
+    "dark-gray-vector",
+    "streets-vector",
+    "gray-vector",
+    "streets-vector",
+    "streets-night-vector",
+    "streets-navigation-vector",
+    "topo-vector",
+    "streets-relief-vector",
+  ],
 };
 
 const getters = {

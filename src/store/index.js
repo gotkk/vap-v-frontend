@@ -1,7 +1,7 @@
 import Vue from "vue";
 import Vuex from "vuex";
 import country from "./modules/Country";
-import mune from "./modules/Menu";
+import menu from "./modules/Menu";
 import animated from "./modules/Animated";
 import mapStyle from './modules/MapStyle';
 import downloadUpload from "./modules/DownloadUpload";
@@ -16,7 +16,7 @@ export default new Vuex.Store({
   actions: {},
   modules: {
     country,
-    mune,
+    menu,
     animated,
     mapStyle,
     downloadUpload,

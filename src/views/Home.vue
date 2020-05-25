@@ -5,42 +5,43 @@
     <HeaderProject
       head="Project2"
       name="Querying Geospatial Data in RDBMS"
-      :animate="amimateSeq[0]"
+      :animate="animateHome[0]"
     />
 
     <ExpansionDetail
       :project="project2"
-      :animate="amimateSeq[1]"
+      :animate="animateHome[1]"
       :last="true"
     />
 
     <HeaderProject
       head="Course Project (as Final Exam)"
       name="Visualizing Air Pollution on a Map"
-      :animate="amimateSeq[2]"
+      :animate="animateHome[2]"
     />
 
     <ExpansionDetail
       :project="projectfinal1"
-      :animate="amimateSeq[3]"
+      :animate="animateHome[3]"
       :last="false"
     />
 
     <ExpansionDetail
       :project="projectfinal2"
-      :animate="amimateSeq[4]"
+      :animate="animateHome[4]"
       :last="false"
     />
 
     <ExpansionDetail
       :project="projectfinal3"
-      :animate="amimateSeq[5]"
+      :animate="animateHome[5]"
       :last="true"
     />
   </div>
 </template>
 
 <script>
+import { mapState } from "vuex";
 import HeaderTitle from "../components/home/HeaderTitle";
 import HeaderProject from "../components/home/HeaderProject";
 import ExpansionDetail from "../components/home/ExpansionDetail";
@@ -51,50 +52,14 @@ export default {
     HeaderProject,
     ExpansionDetail,
   },
-  data() {
-    return {
-      amimateSeq: [
-        {
-          classes: "fadeInUp",
-          delay: 200,
-        },
-        {
-          classes: "fadeInUp",
-          delay: 300,
-        },
-        {
-          classes: "fadeInUp",
-          delay: 400,
-        },
-        {
-          classes: "fadeInUp",
-          delay: 500,
-        },
-        {
-          classes: "fadeInUp",
-          delay: 600,
-        },
-        {
-          classes: "fadeInUp",
-          delay: 700,
-        },
-      ],
-      project2: [],
-      projectfinal1: [],
-      projectfinal2: [],
-      projectfinal3: [],
-    };
-  },
-  mounted() {
-    this.initialMenu();
-  },
-  methods: {
-    initialMenu() {
-      this.project2 = this.$store.getters.menuproject2;
-      this.projectfinal1 = this.$store.getters.menufinal1;
-      this.projectfinal2 = this.$store.getters.menufinal2;
-      this.projectfinal3 = this.$store.getters.menufinal3;
-    },
+  computed: {
+    ...mapState({
+      animateHome: state => state?.animated?.a_home,
+      project2: state => state?.menu?.menuproject2,
+      projectfinal1: state => state?.menu?.menufinal1,
+      projectfinal2: state => state?.menu?.menufinal2,
+      projectfinal3: state => state?.menu?.menufinal3,
+    })
   },
 };
 </script>

@@ -1,14 +1,9 @@
 <template>
   <div class="MBRThailand">
     <HeaderTitle line1="MBR Covering Thailand" line2="in 2009" />
-    <div>
-      <v-container v-if="result && nodata">
-        <p v-animate-css="animateNote">
-          <span class="font-weight-bold">Note :</span> No data for Thailand in
-          2009
-        </p>
-      </v-container>
-    </div>
+
+    <Note v-if="result && nodata" :animate="animateNote" :text="note" />
+
     <MapDataSetting
       v-if="result"
       @setstyle="handleSetMapStyle"
@@ -54,6 +49,7 @@ import HeaderTitle from "../components/home/HeaderTitle";
 import MapVisualize2 from "../components/visualize/MapVisualize2";
 import MapDataSetting from "../components/visualize/MapDataSetting";
 import ResultNotfound from "../components/mock/ResultNotfound";
+import Note from "../components/mock/Note";
 
 export default {
   name: "MBRThailand",
@@ -62,12 +58,14 @@ export default {
     MapVisualize2,
     MapDataSetting,
     ResultNotfound,
+    Note,
   },
   data() {
     return {
       result: false,
       notfound: false,
       nodata: false,
+      note: "No data of Thailand in 2009",
       year: "2009",
       mapStyle: "",
       visualizeMBRPoint: [],
@@ -80,7 +78,7 @@ export default {
   },
   computed: {
     ...mapState({
-      animateNote: (state) => state?.animated?.a_note,
+      animateNote: (state) => state?.animated?.a_note_map,
       animateResult: (state) => state?.animated?.a_result,
       animateMapResult: (state) => state?.animated?.a_mapresult,
       animateMapSetting: (state) => state?.animated?.a_mapsetting,
@@ -143,9 +141,4 @@ export default {
 };
 </script>
 
-<style scoped>
-.MBRThailand .block-map {
-  height: 90vh;
-  width: 100%;
-}
-</style>
+<style scoped></style>

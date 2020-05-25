@@ -25,10 +25,13 @@
                   <v-btn
                     type="submit"
                     form="input-country"
-                    color="grey lighten-1"
+                    color="teal"
+                    class="white--text"
                     block
-                    >Search</v-btn
                   >
+                    <v-icon>mdi-magnify</v-icon>
+                    <span>search</span>
+                  </v-btn>
                 </div>
               </v-col>
             </v-row>
@@ -165,8 +168,4 @@ export default {
 };
 </script>
 
-<style scoped>
-.historyPM25byCountry .block-btn {
-  height: 100%;
-}
-</style>
+<style scoped></style>

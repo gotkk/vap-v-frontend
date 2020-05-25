@@ -1,14 +1,9 @@
 <template>
   <div class="neighborThailand">
     <HeaderTitle line1="Visualize Neighbor" line2="of Thailand 2018" />
-    <div>
-      <v-container v-if="result && nodata">
-        <p v-animate-css="animateNote">
-          <span class="font-weight-bold">Note :</span> No data for this in the
-          year 2018
-        </p>
-      </v-container>
-    </div>
+
+    <Note v-if="result && nodata" :animate="animateNote" :text="note" />
+
     <MapDataSetting
       v-if="result"
       @setstyle="handleSetMapStyle"
@@ -50,6 +45,7 @@ import HeaderTitle from "../components/home/HeaderTitle";
 import MapVisualize from "../components/visualize/MapVisualize";
 import MapDataSetting from "../components/visualize/MapDataSetting";
 import ResultNotfound from "../components/mock/ResultNotfound";
+import Note from "../components/mock/Note";
 
 export default {
   name: "NeighborThailand",
@@ -58,12 +54,14 @@ export default {
     MapVisualize,
     MapDataSetting,
     ResultNotfound,
+    Note,
   },
   data() {
     return {
       result: false,
       notfound: false,
       nodata: false,
+      note: "No data of Thailand neighbor in 2018",
       year: "2018",
       mapStyle: "",
       visualizeResult: [],
@@ -72,7 +70,7 @@ export default {
   },
   computed: {
     ...mapState({
-      animateNote: (state) => state?.animated?.a_note,
+      animateNote: (state) => state?.animated?.a_note_map,
       animateResult: (state) => state?.animated?.a_result,
       animateMapResult: (state) => state?.animated?.a_mapresult,
       animateMapSetting: (state) => state?.animated?.a_mapsetting,
@@ -128,9 +126,4 @@ export default {
 };
 </script>
 
-<style scoped>
-.neighborThailand .block-map {
-  height: 90vh;
-  width: 100%;
-}
-</style>
+<style scoped></style>

@@ -29,10 +29,13 @@
                   <v-btn
                     type="submit"
                     form="visual-input"
-                    color="grey lighten-1"
+                    color="teal"
+                    class="white--text"
                     block
-                    >Search</v-btn
                   >
+                    <v-icon>mdi-magnify</v-icon>
+                    <span>Search</span>
+                  </v-btn>
                 </div>
               </v-col>
             </v-row>
@@ -157,13 +160,4 @@ export default {
 };
 </script>
 
-<style scoped>
-.lowIncome .block-btn {
-  height: 100%;
-}
-
-.lowIncome .block-map {
-  height: 90vh;
-  width: 100%;
-}
-</style>
+<style scoped></style>
