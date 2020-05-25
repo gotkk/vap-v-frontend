@@ -39,7 +39,7 @@
 
     <div>
       <v-container v-if="result">
-        <div v-animate-css="animateResult" >
+        <div v-animate-css="animateResult">
           <v-row>
             <v-col cols="12">
               <v-card class="block-transparent-shadow">
@@ -76,7 +76,7 @@
         </div>
       </v-container>
       <v-container v-if="notfound">
-        <ResultNotfound :animate="animateResult"/>
+        <ResultNotfound :animate="animateResult" />
       </v-container>
     </div>
   </div>
@@ -84,6 +84,7 @@
 
 <script>
 // @ is an alias to /src
+import { mapState } from "vuex";
 import HeaderTitle from "../components/home/HeaderTitle";
 import ResultNotfound from "../components/mock/ResultNotfound";
 
@@ -107,12 +108,12 @@ export default {
       { text: "PM25", value: "pm25" },
     ],
     historyitems: [],
-    animateInput: {},
-    animateResult: {},
   }),
-  created() {
-    this.animateInput = this.$store.getters.a_input;
-    this.animateResult = this.$store.getters.a_result;
+  computed: {
+    ...mapState({
+      animateInput: (state) => state?.animated?.a_input,
+      animateResult: (state) => state?.animated?.a_result,
+    }),
   },
   watch: {
     countryname() {

@@ -65,6 +65,7 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
 import HeaderTitle from "../components/home/HeaderTitle";
 import MapVisualize from "../components/visualize/MapVisualize";
 import MapSetting from "../components/visualize/MapSetting";
@@ -91,17 +92,7 @@ export default {
         (v) => (v && v.length === 4) || "Year length must be 4",
       ],
       mapStyle: "",
-      animateInput: {},
-      animateResult: {},
-      animateMapResult: {},
-      animateMapSetting: {},
     };
-  },
-  created() {
-    this.animateInput = this.$store.getters.a_input;
-    this.animateResult = this.$store.getters.a_result;
-    this.animateMapResult = this.$store.getters.a_mapresult;
-    this.animateMapSetting = this.$store.getters.a_mapsetting;
   },
   watch: {
     year() {
@@ -109,6 +100,14 @@ export default {
         this.handleClear();
       }
     },
+  },
+  computed: {
+    ...mapState({
+      animateInput: (state) => state?.animated?.a_input,
+      animateResult: (state) => state?.animated?.a_result,
+      animateMapResult: (state) => state?.animated?.a_mapresult,
+      animateMapSetting: (state) => state?.animated?.a_mapsetting,
+    }),
   },
   methods: {
     validate() {

@@ -2,7 +2,7 @@
   <div class="neighborThailand">
     <HeaderTitle line1="Visualize Neighbor" line2="of Thailand 2018" />
     <div>
-      <v-container  v-if="result&&nodata">
+      <v-container v-if="result && nodata">
         <p v-animate-css="animateNote">
           <span class="font-weight-bold">Note :</span> No data for this in the
           year 2018
@@ -38,13 +38,14 @@
         </div>
       </v-container>
       <v-container v-if="notfound">
-        <ResultNotfound :animate="animateResult"/>
+        <ResultNotfound :animate="animateResult" />
       </v-container>
     </div>
   </div>
 </template>
 
 <script>
+import { mapState } from "vuex";
 import HeaderTitle from "../components/home/HeaderTitle";
 import MapVisualize from "../components/visualize/MapVisualize";
 import MapDataSetting from "../components/visualize/MapDataSetting";
@@ -63,22 +64,19 @@ export default {
       result: false,
       notfound: false,
       nodata: false,
-      year: "",
+      year: "2018",
       mapStyle: "",
       visualizeResult: [],
       visualizeResultAll: [],
-      animateNote: {},
-      animateResult: {},
-      animateMapResult: {},
-      animateMapSetting: {},
     };
   },
-  created() {
-    this.animateNote = this.$store.getters.a_note_map;
-    this.animateResult = this.$store.getters.a_result;
-    this.animateMapResult = this.$store.getters.a_mapresult;
-    this.animateMapSetting = this.$store.getters.a_mapsetting;
-    this.year = "2018";
+  computed: {
+    ...mapState({
+      animateNote: (state) => state?.animated?.a_note,
+      animateResult: (state) => state?.animated?.a_result,
+      animateMapResult: (state) => state?.animated?.a_mapresult,
+      animateMapSetting: (state) => state?.animated?.a_mapsetting,
+    }),
   },
   mounted() {
     this.handleMap();
@@ -95,7 +93,7 @@ export default {
         .then((closest) => {
           let { result, result_all } = closest;
           if (result_all?.[0]?.length > 0) {
-            if(result?.[0]?.length === 0){
+            if (result?.[0]?.length === 0) {
               this.nodata = true;
             }
             this.visualizeResult = [...result[0]];

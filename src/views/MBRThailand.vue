@@ -2,7 +2,7 @@
   <div class="MBRThailand">
     <HeaderTitle line1="MBR Covering Thailand" line2="in 2009" />
     <div>
-      <v-container v-if="result&&nodata">
+      <v-container v-if="result && nodata">
         <p v-animate-css="animateNote">
           <span class="font-weight-bold">Note :</span> No data for Thailand in
           2009
@@ -49,6 +49,7 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
 import HeaderTitle from "../components/home/HeaderTitle";
 import MapVisualize2 from "../components/visualize/MapVisualize2";
 import MapDataSetting from "../components/visualize/MapDataSetting";
@@ -67,7 +68,7 @@ export default {
       result: false,
       notfound: false,
       nodata: false,
-      year: "",
+      year: "2009",
       mapStyle: "",
       visualizeMBRPoint: [],
       visualizePMPoint: [],
@@ -75,18 +76,15 @@ export default {
       visualizeMBRPointAll: [],
       visualizePMPointAll: [],
       visualizeRingAll: [],
-      animateNote: {},
-      animateResult: {},
-      animateMapResult: {},
-      animateMapSetting: {},
     };
   },
-  created() {
-    this.animateNote = this.$store.getters.a_note_map;
-    this.animateResult = this.$store.getters.a_result;
-    this.animateMapResult = this.$store.getters.a_mapresult;
-    this.animateMapSetting = this.$store.getters.a_mapsetting;
-    this.year = "2009";
+  computed: {
+    ...mapState({
+      animateNote: (state) => state?.animated?.a_note,
+      animateResult: (state) => state?.animated?.a_result,
+      animateMapResult: (state) => state?.animated?.a_mapresult,
+      animateMapSetting: (state) => state?.animated?.a_mapsetting,
+    }),
   },
   mounted() {
     this.handleMap();
@@ -103,7 +101,7 @@ export default {
         .then((mbr) => {
           let { result, result_all } = mbr;
           if (result_all?.pmpoint?.length > 0) {
-            if(result?.pmpoint?.length === 0){
+            if (result?.pmpoint?.length === 0) {
               this.nodata = true;
             }
             this.visualizeMBRPoint = [...result.mbrpoint];

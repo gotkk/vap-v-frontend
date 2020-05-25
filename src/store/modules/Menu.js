@@ -79,21 +79,21 @@ const mutations = {
       },
       {
         path: "/neighbor_thailand",
-        title: "[5c] Neighbor of Thailand",
+        title: "[5c] Neighbor of Thailand 2018",
         icon: "mdi-map-marker-multiple",
         detail:
           "Visualize all the city points of Thailand’s neighboring countries in 2018.",
       },
       {
         path: "/mbr_thailand",
-        title: "[5d] MBR of Thailand",
+        title: "[5d] MBR of Thailand 2009",
         icon: "mdi-rhombus",
         detail:
           "Visualize the four points of MBR covering all city points in Thailand in 2009.",
       },
       {
         path: "/highest_city",
-        title: "[5e] Highest No of City",
+        title: "[5e] Highest No of City 2011",
         icon: "mdi-chart-areaspline",
         detail:
           "Visualize all city points of countries having the highest no. of city points in 2011.",

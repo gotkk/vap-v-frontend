@@ -83,7 +83,7 @@
         </div>
       </v-container>
       <v-container v-if="notfound">
-        <ResultNotfound :animate="animateResult"/>
+        <ResultNotfound :animate="animateResult" />
       </v-container>
     </div>
   </div>
@@ -91,6 +91,7 @@
 
 <script>
 // @ is an alias to /src
+import { mapState } from "vuex";
 import HeaderTitle from "../components/home/HeaderTitle";
 import ResultNotfound from "../components/mock/ResultNotfound";
 
@@ -113,12 +114,12 @@ export default {
       (v) => (v && v.length === 4) || "Year length must be 4",
     ],
     colorpm25Rules: [(v) => !!v || "Color of PM 2.5 is required"],
-    animateInput: {},
-    animateResult: {},
   }),
-  created() {
-    this.animateInput = this.$store.getters.a_input;
-    this.animateResult = this.$store.getters.a_result;
+  computed: {
+    ...mapState({
+      animateInput: (state) => state?.animated?.a_input,
+      animateResult: (state) => state?.animated?.a_result,
+    }),
   },
   watch: {
     year() {

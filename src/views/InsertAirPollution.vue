@@ -87,6 +87,7 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
 import HeaderTitle from "../components/home/HeaderTitle";
 
 export default {
@@ -99,17 +100,15 @@ export default {
       excelfile: "",
       choosed: false,
       loadingDownload: false,
-      animateInput: {},
-      animateNote: {},
-      animateResult: {},
-      animateDownload: {},
     };
   },
-  created() {
-    this.animateInput = this.$store.getters.a_input;
-    this.animateNote = this.$store.getters.a_note;
-    this.animateResult = this.$store.getters.a_result;
-    this.animateDownload = this.$store.getters.a_download;
+  computed: {
+    ...mapState({
+      animateNote: (state) => state?.animated?.a_note,
+      animateInput: (state) => state?.animated?.a_input,
+      animateResult: (state) => state?.animated?.a_result,
+      animateDownload: (state) => state?.animated?.a_download,
+    }),
   },
   methods: {
     handleSelectFile() {

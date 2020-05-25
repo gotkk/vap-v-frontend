@@ -1,13 +1,12 @@
 import Vue from "vue";
 import Vuex from "vuex";
 import country from "./modules/Country";
-import airpollution from "./modules/AirPollution";
-import histotypm25 from "./modules/HistoryPM25";
-import TotalPopulation from "./modules/TotalPopulation";
-import VisualAllPointAllCountry from "./modules/VisualAllPointAllCountry";
-import Menu from "./modules/Menu";
-import Animated from "./modules/Animated";
-import MapStyle from './modules/MapStyle';
+import mune from "./modules/Menu";
+import animated from "./modules/Animated";
+import mapStyle from './modules/MapStyle';
+import downloadUpload from "./modules/DownloadUpload";
+import calculateResult from "./modules/CalculateResult";
+import visualize from "./modules/Visualize";
 
 Vue.use(Vuex);
 
@@ -17,12 +16,11 @@ export default new Vuex.Store({
   actions: {},
   modules: {
     country,
-    airpollution,
-    histotypm25,
-    TotalPopulation,
-    VisualAllPointAllCountry,
-    Menu,
-    Animated,
-    MapStyle
+    mune,
+    animated,
+    mapStyle,
+    downloadUpload,
+    calculateResult,
+    visualize,
   },
 });

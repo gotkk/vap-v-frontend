@@ -8,14 +8,11 @@ import TotalPopulation from '../views/TotalPopulation.vue';
 import AllPointAllCountry from '../views/AllPointAllCountry.vue';
 import ClosestBangkok from '../views/ClosestBangkok.vue';
 import NeighborThailand from '../views/NeighborThailand.vue';
-import VisualTestTest from '../views/VisualTestTest.vue';
 import MBRThailand from '../views/MBRThailand.vue';
 import HighestNo from '../views/HighestNo.vue';
 import LowIncome from '../views/LowIncome.vue';
 import CityPM25than50 from '../views/CityPM25than50.vue';
 import AvgPM25ByCountry from '../views/AvgPM25ByCountry.vue';
-
-import Test from '../views/test.vue';
 
 Vue.use(VueRouter)
 
@@ -44,16 +41,6 @@ Vue.use(VueRouter)
     path: '/total_population',
     name: 'TotalPopulation',
     component: TotalPopulation
-  },
-  {
-    path: '/test',
-    name: 'Test',
-    component: Test
-  },
-  {
-    path: '/test2',
-    name: 'VisualTestTest',
-    component: VisualTestTest
   },
   {
     path: '/all_point_all_country',

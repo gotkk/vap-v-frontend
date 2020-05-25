@@ -13,6 +13,7 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
 import HeaderTitle from "../components/home/HeaderTitle";
 import DownloadExcel from "../components/download/DownloadExcel";
 export default {
@@ -21,13 +22,10 @@ export default {
     HeaderTitle,
     DownloadExcel,
   },
-  data() {
-    return {
-      animateInput: {},
-    };
-  },
-  created() {
-    this.animateInput = this.$store.getters.a_input;
+  computed: {
+    ...mapState({
+      animateInput: (state) => state?.animated?.a_input,
+    }),
   },
   methods: {
     handleDownload() {
@@ -49,5 +47,4 @@ export default {
 };
 </script>
 
-<style scoped>
-</style>
+<style scoped></style>
