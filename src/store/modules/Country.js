@@ -23,7 +23,6 @@ const actions = {
                     resolve(res.data)
                 })
                 .catch((err) => {
-                    console.log(err);
                     reject(err);
                 })
         })

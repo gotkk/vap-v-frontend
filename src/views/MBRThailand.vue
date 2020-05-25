@@ -103,7 +103,6 @@ export default {
         .then((mbr) => {
           let { result, result_all } = mbr;
           if (result_all?.pmpoint?.length > 0) {
-            console.log(result);
             if(result?.pmpoint?.length === 0){
               this.nodata = true;
             }

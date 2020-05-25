@@ -4,7 +4,7 @@
       <v-container>
         <v-row>
           <v-col cols="12">
-            <div class="block-center block-column">
+            <div class="block-center block-column mt-5">
               <span class="text-head" v-animate-css="'fadeInDown'">{{line1}}</span>
               <span class="text-head" v-animate-css="'fadeInUp'">{{line2}}</span>
             </div>

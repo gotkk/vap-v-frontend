@@ -1,6 +1,6 @@
 <template>
   <div id="header">
-    <v-navigation-drawer v-model="drawer" app temporary>
+    <v-navigation-drawer v-model="drawer" app temporary width="290">
       <v-list dense>
         <v-list-item
           link

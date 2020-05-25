@@ -24,7 +24,7 @@
                   <br />
                   <div>
                     <span style="fontWeight: bold">Upload Excel File : </span>
-                    <span ref="ddd">No File Chosen</span>
+                    <span ref="file">No File Chosen</span>
                   </div>
                 </div>
               </v-col>
@@ -115,7 +115,7 @@ export default {
     handleSelectFile() {
       this.excelfile = this.$refs.excel_file.files[0];
       // console.log("selected");
-      this.$refs.ddd.innerHTML = this.$refs.excel_file.files[0].name;
+      this.$refs.file.innerHTML = this.$refs.excel_file.files[0].name;
       this.choosed = true;
       setTimeout(() => {
         this.$refs.btnupload.classList.add("animated", "pulse");

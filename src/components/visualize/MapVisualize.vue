@@ -64,7 +64,6 @@ export default {
         { css: true }
       )
         .then(([ArcGISMap, MapView, Graphic, GraphicsLayer]) => {
-          console.log(this.mapstyle);
           const map = new ArcGISMap({
             basemap: this.mapstyle || "topo-vector",
           });

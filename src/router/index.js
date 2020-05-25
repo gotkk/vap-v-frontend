@@ -12,6 +12,8 @@ import VisualTestTest from '../views/VisualTestTest.vue';
 import MBRThailand from '../views/MBRThailand.vue';
 import HighestNo from '../views/HighestNo.vue';
 import LowIncome from '../views/LowIncome.vue';
+import CityPM25than50 from '../views/CityPM25than50.vue';
+import AvgPM25ByCountry from '../views/AvgPM25ByCountry.vue';
 
 import Test from '../views/test.vue';
 
@@ -82,6 +84,16 @@ Vue.use(VueRouter)
     path: '/low_income',
     name: 'LowIncome',
     component: LowIncome
+  },
+  {
+    path: '/city_pm25_2015',
+    name: 'CityPM25than50',
+    component: CityPM25than50
+  },
+  {
+    path: '/avg_pm25_country',
+    name: 'AvgPM25ByCountry',
+    component: AvgPM25ByCountry
   },
 ]
 

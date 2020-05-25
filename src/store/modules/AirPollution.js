@@ -95,7 +95,7 @@ const actions = {
             headers: {
               "Content-Disposition": "attachment; filename=InsertTemplate.xlsx",
               "Content-Type":
-                "application/vnd.openxmlformats-officedocument.Sheet1.sheet",
+                "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
             },
             responseType: "arraybuffer",
           }
@@ -108,6 +108,52 @@ const actions = {
           // document.body.appendChild(link);
           // link.click();
           FileDownload(res.data, "InsertTemplate.xlsx");
+          resolve();
+        })
+        .catch((err) => reject(err));
+    });
+  },
+  getCountryAndCityPMthan50() {
+    return new Promise((resolve, reject) => {
+      axios
+        .post(
+          `${process.env.VUE_APP_SPDB_BACKEND_APP ||
+            "http://localhost:5000/"}airpollution/download_country_city_pmthan50`,
+          null,
+          {
+            headers: {
+              "Content-Disposition": "attachment; filename=CountryAndCityPMthan50.xls",
+              "Content-Type":
+                "application/vnd.ms-excel",
+            },
+            responseType: "arraybuffer",
+          }
+        )
+        .then((res) => {
+          FileDownload(res.data, "CountryAndCityPMthan50.xls");
+          resolve();
+        })
+        .catch((err) => reject(err));
+    });
+  },
+  getAvgPm25ByCountry() {
+    return new Promise((resolve, reject) => {
+      axios
+        .post(
+          `${process.env.VUE_APP_SPDB_BACKEND_APP ||
+            "http://localhost:5000/"}airpollution/download_avgpm25_country`,
+          null,
+          {
+            headers: {
+              "Content-Disposition": "attachment; filename=AvgPm25ByCountry.xls",
+              "Content-Type":
+                "application/vnd.ms-excel",
+            },
+            responseType: "arraybuffer",
+          }
+        )
+        .then((res) => {
+          FileDownload(res.data, "AvgPm25ByCountry.xls");
           resolve();
         })
         .catch((err) => reject(err));
@@ -157,7 +203,6 @@ const actions = {
           resolve(res.data);
         })
         .catch((err) => {
-          console.log(err);
           reject(err);
         });
     });
@@ -174,7 +219,6 @@ const actions = {
           resolve(res.data);
         })
         .catch((err) => {
-          console.log(err);
           reject(err);
         });
     });
@@ -191,7 +235,6 @@ const actions = {
           resolve(res.data);
         })
         .catch((err) => {
-          console.log(err);
           reject(err);
         });
     });
