@@ -1,5 +1,5 @@
 # vap-v-frontend
-The web application about visualizing air pollution. This is the frontend web application continue from spdb-v-frontend.
+The frontend web application continued from spdb-v-frontend project, append global air pollution statistical calculation and visualization. This project in a part of Spatial Database and GIS Application course.
 
 ## Getting Started
 Install [Node.js](https://nodejs.org/en/).
