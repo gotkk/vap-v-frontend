@@ -53,6 +53,10 @@ const state = {
       delay: 600,
     },
   ],
+  a_notfound: {
+    classes: "bounceIn",
+    delay: 0
+  }
 };
 
 const getters = {
@@ -64,6 +68,7 @@ const getters = {
   a_mapresult: (state) => state.a_mapresult,
   a_download: (state) => state.a_download,
   a_home: (state) => state.a_home,
+  a_notfound: (state) => state.a_notfound
 };
 
 const mutations = {};

@@ -27,7 +27,7 @@ const mutations = {
     ];
     let projectfianl1 = [
       {
-        path: "/insert_airpollution",
+        path: "/insert_air_pollution",
         title: "[2,3] Insert AirPollutionPM25",
         icon: "mdi-database-plus",
         detail: `Given an input path to the input excel file for insert into AirPollutionPM25 

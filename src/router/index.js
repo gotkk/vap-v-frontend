@@ -13,6 +13,7 @@ import HighestNo from '../views/HighestNo.vue';
 import LowIncome from '../views/LowIncome.vue';
 import CityPM25than50 from '../views/CityPM25than50.vue';
 import AvgPM25ByCountry from '../views/AvgPM25ByCountry.vue';
+import PageNotFound from '../views/PageNotFound.vue';
 
 Vue.use(VueRouter)
 
@@ -28,7 +29,7 @@ Vue.use(VueRouter)
     component: CountryArea
   },
   {
-    path: '/insert_airpollution',
+    path: '/insert_air_pollution',
     name: 'InsertAirPollution',
     component: InsertAirPollution
   },
@@ -82,6 +83,11 @@ Vue.use(VueRouter)
     name: 'AvgPM25ByCountry',
     component: AvgPM25ByCountry
   },
+  {
+    path: '*',
+    name: 'NotFound',
+    component: PageNotFound
+  }
 ]
 
 const router = new VueRouter({
