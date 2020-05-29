@@ -23,7 +23,7 @@ const actions = {
     return new Promise((resolve, reject) => {
       axios
         .get(
-          `${process.env.VUE_APP_SPDB_BACKEND_APP ||
+          `${process.env.VUE_APP_VAP_BACKEND_APP ||
             "http://localhost:5000/"}airpollution/historypm25_country/${country}`
         )
         .then((res) => {
@@ -39,7 +39,7 @@ const actions = {
     return new Promise((resolve, reject) => {
       axios
         .post(
-          `${process.env.VUE_APP_SPDB_BACKEND_APP ||
+          `${process.env.VUE_APP_VAP_BACKEND_APP ||
             "http://localhost:5000/"}airpollution/total_population`,
           input
         )

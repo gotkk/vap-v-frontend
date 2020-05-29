@@ -44,7 +44,7 @@ const actions = {
     return new Promise((resolve, reject) => {
       axios
         .get(
-          `${process.env.VUE_APP_SPDB_BACKEND_APP ||
+          `${process.env.VUE_APP_VAP_BACKEND_APP ||
             "http://localhost:5000/"}airpollution/visual_all_point/${year}`
         )
         .then((res) => {
@@ -60,7 +60,7 @@ const actions = {
     return new Promise((resolve, reject) => {
       axios
         .get(
-          `${process.env.VUE_APP_SPDB_BACKEND_APP ||
+          `${process.env.VUE_APP_VAP_BACKEND_APP ||
             "http://localhost:5000/"}airpollution/50closest_bangkok`
         )
         .then((res) => {
@@ -76,7 +76,7 @@ const actions = {
     return new Promise((resolve, reject) => {
       axios
         .get(
-          `${process.env.VUE_APP_SPDB_BACKEND_APP ||
+          `${process.env.VUE_APP_VAP_BACKEND_APP ||
             "http://localhost:5000/"}airpollution/neighbor_bangkok`
         )
         .then((res) => {
@@ -92,7 +92,7 @@ const actions = {
     return new Promise((resolve, reject) => {
       axios
         .get(
-          `${process.env.VUE_APP_SPDB_BACKEND_APP ||
+          `${process.env.VUE_APP_VAP_BACKEND_APP ||
             "http://localhost:5000/"}airpollution/maxmin_latln_mbr`
         )
         .then((res) => {
@@ -108,7 +108,7 @@ const actions = {
     return new Promise((resolve, reject) => {
       axios
         .get(
-          `${process.env.VUE_APP_SPDB_BACKEND_APP ||
+          `${process.env.VUE_APP_VAP_BACKEND_APP ||
             "http://localhost:5000/"}airpollution/highest_no_city`
         )
         .then((res) => {
@@ -124,7 +124,7 @@ const actions = {
     return new Promise((resolve, reject) => {
       axios
         .get(
-          `${process.env.VUE_APP_SPDB_BACKEND_APP ||
+          `${process.env.VUE_APP_VAP_BACKEND_APP ||
             "http://localhost:5000/"}airpollution/low_income/${year}`
         )
         .then((res) => {

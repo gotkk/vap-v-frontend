@@ -22,7 +22,7 @@ const actions = {
       formData.append("excel", excelfile);
       axios
         .post(
-          `${process.env.VUE_APP_SPDB_BACKEND_APP ||
+          `${process.env.VUE_APP_VAP_BACKEND_APP ||
             "http://localhost:5000/"}airpollution/upload`,
           formData,
           {
@@ -44,7 +44,7 @@ const actions = {
     return new Promise((resolve, reject) => {
       axios
         .get(
-          `${process.env.VUE_APP_SPDB_BACKEND_APP ||
+          `${process.env.VUE_APP_VAP_BACKEND_APP ||
             "http://localhost:5000/"}airpollution/update_geometry`
         )
         .then((res) => {
@@ -60,7 +60,7 @@ const actions = {
     return new Promise((resolve, reject) => {
       axios
         .post(
-          `${process.env.VUE_APP_SPDB_BACKEND_APP ||
+          `${process.env.VUE_APP_VAP_BACKEND_APP ||
             "http://localhost:5000/"}airpollution/download_template`,
           null,
           {
@@ -89,7 +89,7 @@ const actions = {
     return new Promise((resolve, reject) => {
       axios
         .post(
-          `${process.env.VUE_APP_SPDB_BACKEND_APP ||
+          `${process.env.VUE_APP_VAP_BACKEND_APP ||
             "http://localhost:5000/"}airpollution/download_country_city_pmthan50`,
           null,
           {
@@ -112,7 +112,7 @@ const actions = {
     return new Promise((resolve, reject) => {
       axios
         .post(
-          `${process.env.VUE_APP_SPDB_BACKEND_APP ||
+          `${process.env.VUE_APP_VAP_BACKEND_APP ||
             "http://localhost:5000/"}airpollution/download_avgpm25_country`,
           null,
           {

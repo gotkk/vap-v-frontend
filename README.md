@@ -1,5 +1,5 @@
-# spdb-v-frontend
-This is the frontend web application takes a country name as user input and calculate the country area.
+# vap-v-frontend
+The web application about visualizing air pollution. This is the frontend web application continue from spdb-v-frontend.
 
 ## Getting Started
 Install [Node.js](https://nodejs.org/en/).
@@ -7,7 +7,7 @@ Install [Node.js](https://nodejs.org/en/).
 ### Prerequisites
 Create environment variables (.env) file in directory of the project and edit (.env) file as follows.
 ```
-VUE_APP_SPDB_BACKEND_APP=URL
+VUE_APP_VAP_BACKEND_APP=URL
 ```
 * URL is the domain of running backend application such as [http://localhost:5000/]
 
