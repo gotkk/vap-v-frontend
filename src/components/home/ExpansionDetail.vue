@@ -30,8 +30,17 @@
 <script>
 export default {
   name: "ExpansionDetail",
-  props: ["project", "animate", "last"],
-  mounted() {},
+  props: {
+    project: {
+      type: Array,
+      default: () => [],
+    },
+    animate: [Object, Array],
+    last: {
+      type: Boolean,
+      default: false,
+    },
+  },
   methods: {
     handleNavigation(path) {
       this.$router.push({ path: path });

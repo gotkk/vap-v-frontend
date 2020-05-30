@@ -13,7 +13,7 @@
           v-animate-css="animateMapResult"
           v-if="visualizeResult.length > 0"
         >
-          <MapVisualize :pointlocation="visualizeResult" :mapstyle="mapStyle" />
+          <MapVisualize :point-location="visualizeResult" :map-style="mapStyle" />
         </div>
       </v-container>
       <v-container v-if="notfound">

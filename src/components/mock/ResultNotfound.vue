@@ -13,7 +13,9 @@
 <script>
 export default {
   name: "ResultNotFound",
-  props: ["animate"],
+  props: {
+    animate: [Object, Array],
+  },
 };
 </script>
 

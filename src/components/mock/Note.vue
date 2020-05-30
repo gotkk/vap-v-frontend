@@ -16,7 +16,13 @@
 <script>
 export default {
   name: "Note",
-  props: ["animate", "text"],
+  props: {
+    animate: [Object, Array],
+    text: {
+      type: String,
+      default: "note is not available"
+    }
+  },
 };
 </script>
 

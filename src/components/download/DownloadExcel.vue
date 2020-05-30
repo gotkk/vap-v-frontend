@@ -4,7 +4,10 @@
       <div class="block-transparent-shadow" v-animate-css="animate">
         <v-row>
           <v-col cols="12">
-            <div class="d-flex justify-center align-center flex-column btn-upload-download" @click="handleDownload">
+            <div
+              class="d-flex justify-center align-center flex-column btn-upload-download"
+              @click="handleDownload"
+            >
               <v-icon size="60">mdi-cloud-download</v-icon>
               <br />
               <div>
@@ -22,7 +25,13 @@
 <script>
 export default {
   name: "DownloadExcel",
-  props: ["file", "animate"],
+  props: {
+    file: {
+      type: String,
+      default: "file name is not available",
+    },
+    animate: [Object, Array],
+  },
   methods: {
     handleDownload() {
       this.$emit("download");

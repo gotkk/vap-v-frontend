@@ -8,7 +8,17 @@ import { loadModules } from "esri-loader";
 
 export default {
   name: "MapVisualize",
-  props: ["pointlocation", "mapstyle", "year"],
+  props: {
+    pointLocation: Array,
+    mapStyle: {
+      type: String,
+      default: "dark-gray-vector"
+    },
+    year: {
+      type: String,
+      default: "0"
+    }
+  },
   mounted() {
     this.handleLoadMap();
   },
@@ -18,7 +28,7 @@ export default {
     }
   },
   watch: {
-    mapstyle() {
+    mapStyle() {
       this.handleLoadMap();
     },
     year(){
@@ -65,7 +75,7 @@ export default {
       )
         .then(([ArcGISMap, MapView, Graphic, GraphicsLayer]) => {
           const map = new ArcGISMap({
-            basemap: this.mapstyle || "topo-vector",
+            basemap: this.mapStyle || "topo-vector",
           });
           this.view = new MapView({
             container: this.$el,
@@ -77,17 +87,17 @@ export default {
           let graphicsLayer = new GraphicsLayer();
           map.add(graphicsLayer);
 
-          for (let i = 0; i < this.pointlocation.length; i++) {
+          for (let i = 0; i < this.pointLocation.length; i++) {
             let point = {
               type: "point",
-              longitude: this.pointlocation[i].longitude,
-              latitude: this.pointlocation[i].latitude,
+              longitude: this.pointLocation[i].longitude,
+              latitude: this.pointLocation[i].latitude,
             };
 
             let simpleMarkerSymbol = {
               type: "simple-marker",
               size: 4,
-              color: this.mapColorRGB(this.pointlocation[i].color_pm25),
+              color: this.mapColorRGB(this.pointLocation[i].color_pm25),
               outline: {
                 color: [0, 0, 0],
                 width: 1,

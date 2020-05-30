@@ -44,7 +44,13 @@ export default {
       yearList: [],
     };
   },
-  props: ["animate","yearselected"],
+  props: {
+    animate: [Object, Array],
+    yearSelected: {
+      type: String,
+      default: "0",
+    },
+  },
   created() {
     this.handleGetMapStyle();
   },
@@ -53,9 +59,9 @@ export default {
       let data_style = this.$store.getters.mapstyle;
       this.mapStyle = data_style[0];
       this.mapStyleList = [...data_style];
-      this.year = this.yearselected;
-      this.yearList = [this.yearselected, "All Year"];
-      this.$emit("setstyle", data_style[0])
+      this.year = this.yearSelected;
+      this.yearList = [this.yearSelected, "All Year"];
+      this.$emit("setstyle", data_style[0]);
     },
     handleSelectMapStyle(value) {
       this.$emit("setstyle", value);

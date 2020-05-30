@@ -9,7 +9,7 @@
       @setstyle="handleSetMapStyle"
       @setyear="handleSetYear"
       :animate="animateMapSetting"
-      :yearselected="year"
+      :year-selected="year"
     />
     <div>
       <v-container v-if="result">
@@ -20,14 +20,14 @@
         >
           <MapVisualize
             v-if="year === 'All Year'"
-            :pointlocation="visualizeResultAll"
-            :mapstyle="mapStyle"
+            :point-location="visualizeResultAll"
+            :map-style="mapStyle"
             :year="year"
           />
           <MapVisualize
             v-else
-            :pointlocation="visualizeResult"
-            :mapstyle="mapStyle"
+            :point-location="visualizeResult"
+            :map-style="mapStyle"
             :year="year"
           />
         </div>

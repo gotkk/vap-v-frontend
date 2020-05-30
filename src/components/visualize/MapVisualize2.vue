@@ -8,13 +8,19 @@ import { loadModules } from "esri-loader";
 
 export default {
   name: "MapVisualize2",
-  props: [
-    "pointlocation1",
-    "pointlocation2",
-    "polygonlocation",
-    "mapstyle",
-    "year",
-  ],
+  props: {
+    pointLocation1: Array,
+    pointLocation2: Array,
+    polygonLocation: Array,
+    mapStyle: {
+      type: String,
+      default: "dark-gray-vector",
+    },
+    year: {
+      type: String,
+      default: "0",
+    },
+  },
   mounted() {
     this.handleLoadMap();
   },
@@ -24,7 +30,7 @@ export default {
     }
   },
   watch: {
-    mapstyle() {
+    mapStyle() {
       this.handleLoadMap();
     },
     year() {
@@ -70,7 +76,7 @@ export default {
         { css: true }
       ).then(([ArcGISMap, MapView, Graphic, GraphicsLayer]) => {
         const map = new ArcGISMap({
-          basemap: this.mapstyle || "topo-vector",
+          basemap: this.mapStyle || "topo-vector",
         });
         this.view = new MapView({
           container: this.$el,
@@ -82,12 +88,12 @@ export default {
         let graphicsLayer = new GraphicsLayer();
         map.add(graphicsLayer);
 
-        this.addPoint(this.pointlocation1, Graphic, graphicsLayer);
+        this.addPoint(this.pointLocation1, Graphic, graphicsLayer);
 
-        this.polygonlocation?.[0]?.[0] &&
+        this.polygonLocation?.[0]?.[0] &&
           this.addPolygon(Graphic, graphicsLayer);
 
-        this.addPoint(this.pointlocation2, Graphic, graphicsLayer);
+        this.addPoint(this.pointLocation2, Graphic, graphicsLayer);
       });
     },
     addPoint(pointlocation, Graphic, graphicsLayer) {
@@ -119,7 +125,7 @@ export default {
     addPolygon(Graphic, graphicsLayer) {
       let polygon = {
         type: "polygon",
-        rings: this.polygonlocation,
+        rings: this.polygonLocation,
       };
 
       let simpleFillSymbol = {

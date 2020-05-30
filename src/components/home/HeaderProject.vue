@@ -12,7 +12,17 @@
 <script>
 export default {
   name: "HearderProject",
-  props: ["head", "name", "animate"],
+  props: {
+    head: {
+      type: String,
+      default: "project",
+    },
+    name: {
+      type: String,
+      default: "project name",
+    },
+    animate: [Object, Array],
+  },
 };
 </script>
 

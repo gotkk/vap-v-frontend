@@ -16,8 +16,8 @@
               v-if="visualizeResult.length > 0"
             >
               <MapVisualize
-                :pointlocation="visualizeResult"
-                :mapstyle="mapStyle"
+                :point-location="visualizeResult"
+                :map-style="mapStyle"
               />
             </div>
           </v-col>

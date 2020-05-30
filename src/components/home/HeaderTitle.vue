@@ -22,7 +22,16 @@
 <script>
 export default {
   name: "HeaderTitle",
-  props: ["line1", "line2"],
+  props: {
+    line1: {
+      type: String,
+      default: "Header Title 1"
+    },
+    line2: {
+      type: String,
+      default: "Header Title 2"
+    }
+  },
 };
 </script>
 

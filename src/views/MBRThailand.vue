@@ -9,7 +9,7 @@
       @setstyle="handleSetMapStyle"
       @setyear="handleSetYear"
       :animate="animateMapSetting"
-      :yearselected="year"
+      :year-selected="year"
     />
     <div>
       <v-container v-if="result">
@@ -20,18 +20,18 @@
         >
           <MapVisualize2
             v-if="year === 'All Year'"
-            :pointlocation1="visualizePMPointAll"
-            :pointlocation2="visualizeMBRPointAll"
-            :polygonlocation="visualizeRingAll"
-            :mapstyle="mapStyle"
+            :point-location1="visualizePMPointAll"
+            :point-location2="visualizeMBRPointAll"
+            :polygon-location="visualizeRingAll"
+            :map-style="mapStyle"
             :year="year"
           />
           <MapVisualize2
             v-else
-            :pointlocation1="visualizePMPoint"
-            :pointlocation2="visualizeMBRPoint"
-            :polygonlocation="visualizeRing"
-            :mapstyle="mapStyle"
+            :point-location1="visualizePMPoint"
+            :point-location2="visualizeMBRPoint"
+            :polygon-location="visualizeRing"
+            :map-style="mapStyle"
             :year="year"
           />
         </div>

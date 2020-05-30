@@ -11,9 +11,6 @@
 import { mapState } from 'vuex';
 export default {
   name: "PageNotFound",
-  mounted() {
-    console.log(this.$router.currentRoute.fullPath);
-  },
   computed: {
       path() {
           return this.$router.currentRoute.fullPath; 

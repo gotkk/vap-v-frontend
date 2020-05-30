@@ -30,7 +30,9 @@ export default {
       listMapStyle: [],
     };
   },
-  props: ["animate"],
+  props: {
+    animate: [Object, Array],
+  },
   created () {
       this.handleGetMapStyle();
   },
